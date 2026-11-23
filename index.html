@@ -190,7 +190,8 @@
   details.fall > summary:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
   .f-head{ display:flex; flex-direction:column; gap:6px; min-width:0; }
   .f-tag{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
-  .f-head h3{ font-size:1.35rem; font-weight:600; }
+  .f-head h3{ font-size:1.35rem; font-weight:600; hyphens:auto; -webkit-hyphens:auto; overflow-wrap:break-word; }
+  @media (max-width:520px){ .f-head h3{ font-size:1.15rem; } }
   .f-kurz{ color:var(--ink-soft); font-size:.92rem; max-width:62ch; }
   .f-side{ display:flex; align-items:center; gap:14px; flex:none; }
   .stand{ font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:3px 8px; white-space:nowrap; }
@@ -618,6 +619,36 @@ const FAELLE = [
     ]
   },
   {
+    id:'partizip', titel:'Partizip- und Adjektivgruppen', tag:'Pflicht in drei Fällen',
+    kurz:'Erweiterte Gruppen wie „vom Lärm geweckt“ oder „von der Arbeit erschöpft“, wenn sie angekündigt, wieder aufgenommen oder als Nachtrag eingeschoben werden.',
+    blick:['Komma bei Hinweiswort davor, bei Wiederaufnahme und als eingeschobener Nachtrag nach Substantiv oder Pronomen','Sie, vom Erfolg beflügelt, schrieb weiter.'],
+    regel:'Eine erweiterte Partizip- oder Adjektivgruppe hat keine eigene Personalform, aber eine Erweiterung (<i>vom Regen durchnässt, von der Kritik unbeeindruckt</i>). Das Komma <b>muss</b> stehen, wenn (1) ein Hinweiswort die Gruppe <b>ankündigt</b> (<i>So, vom Regen durchnässt, kam er heim.</i>: Komma danach und am Ende der Gruppe), (2) ein Hinweiswort sie <b>wieder aufnimmt</b> (<i>Vom Regen durchnässt, so kam er heim.</i>: Komma am Ende der Gruppe) oder (3) sie als <b>Nachtrag direkt hinter einem Substantiv oder Pronomen</b> steht (<i>Sie, vom Erfolg beflügelt, schrieb weiter.</i>: Kommapaar).',
+    probe:'Erkenne die Gruppe: Partizip oder Adjektiv mit Erweiterung, ohne eigene Personalform. Dann: Steht „so“ davor oder danach? Steht sie direkt hinter einem Substantiv oder Pronomen und ließe sich wie in Klammern herausnehmen? Dann Komma.',
+    beispiele:[
+      ['So, vom Regen durchnässt, kam er nach Hause.','Hinweiswort „so“ davor: Kommapaar.'],
+      ['Von der Arbeit erschöpft, so ließ er sich aufs Sofa fallen.','„so“ nimmt die Gruppe wieder auf: Komma am Ende der Gruppe.'],
+      ['Sie, vom Erfolg beflügelt, schrieb sofort weiter.','Nachtrag direkt hinter dem Pronomen: Kommapaar.'],
+      ['Der Autor, von der Kritik unbeeindruckt, schrieb weiter.','Adjektivgruppe als Nachtrag zum Substantiv: Kommapaar.'],
+      ['Der vom Sturm beschädigte Baum stürzte um.','Kein Komma: Das Partizip steht vor dem Substantiv und gehört zur Nominalgruppe.']
+    ],
+    fallen:[
+      ['Sie[[fehlt]] vom Erfolg beflügelt, schrieb sofort weiter.','Sie, vom Erfolg beflügelt, schrieb sofort weiter.','Ein eingeschobener Nachtrag braucht zwei Kommas – auch das erste darf nicht fehlen.'],
+      ['Die Schüler, vom langen Warten ermüdet[[fehlt]] schliefen ein.','Die Schüler, vom langen Warten ermüdet, schliefen ein.','Das schließende Komma wird am häufigsten vergessen: Der Nachtrag ist eingeschoben.'],
+      ['So[[fehlt]] vom Regen durchnässt[[fehlt]] kam er nach Hause.','So, vom Regen durchnässt, kam er nach Hause.','Das Hinweiswort „so“ kündigt die Gruppe an: Komma danach und am Ende der Gruppe.'],
+      ['Der vom Sturm beschädigte[[,]] Baum stürzte um.','Der vom Sturm beschädigte Baum stürzte um.','Ein Partizip vor dem Substantiv gehört zur Nominalgruppe – kein Komma.']
+    ],
+    tipp:'<b>Nicht in diesen Übungen:</b> Gehört die Gruppe nur zur Aussage und wirkt nicht wie ein Zusatz (<i>Vom Lärm geweckt stand er auf. Sie kam aus vollem Halse lachend auf mich zu.</i>), ist das Komma nach dem amtlichen Regelwerk freigestellt: mit und ohne ist richtig (§ 77(5), § 77(7) und § 78(3), Fassung 2016/2018).',
+    saetze:[
+      {s:'So, vom Regen durchnässt, kam er nach Hause.', e:['Das Hinweiswort „so“ kündigt die Gruppe an: Komma danach …','… und am Ende der Gruppe.']},
+      {s:'Von der Arbeit erschöpft, so ließ er sich aufs Sofa fallen.', e:['„so“ nimmt die Gruppe wieder auf: Komma am Ende der Gruppe.']},
+      {s:'Sie, vom Erfolg beflügelt, schrieb sofort weiter.', e:['Die Gruppe ist ein Nachtrag direkt hinter dem Pronomen: Komma davor …','… und danach (Kommapaar).']},
+      {s:'Die Schüler, vom langen Warten ermüdet, schliefen ein.', e:['Die Gruppe ist ein Nachtrag direkt hinter dem Substantiv: Komma davor …','… und danach.']},
+      {s:'Der Autor, von der Kritik unbeeindruckt, schrieb weiter.', e:['Adjektivgruppe als Nachtrag zum Substantiv: Komma davor …','… und danach.']},
+      {s:'Das Zimmer, hell und freundlich eingerichtet, gefiel allen.', e:['Die Gruppe ist ein Nachtrag direkt hinter dem Substantiv: Komma davor …','… und danach.']},
+      {s:'Der vom Sturm beschädigte Baum stürzte um.', h:'Kein Komma: Das Partizip steht vor dem Substantiv und gehört zur Nominalgruppe.'}
+    ]
+  },
+  {
     id:'zusaetze', titel:'Zusätze, Anrede und Ausruf', tag:'Pflicht · eingeschoben: zwei Kommas',
     kurz:'Appositionen, „zum Beispiel“, „und zwar“, Datum, Anrede und Ausruf.',
     blick:['Zusatz eingeschoben: Komma vorn und hinten; nachgestellt: Komma davor','Wien, die Hauptstadt, liegt an der Donau.'],
@@ -680,12 +711,14 @@ const ENT = {
     ['Es kommt „zu“ + Infinitiv vor („um … zu“, „… ihn zu treffen“)','inf'],
     ['Gleichartige Wörter stehen nebeneinander, oder es folgt ein Gegensatz („aber“, „sondern“)','aufz'],
     ['Ein Zusatz, eine Anrede oder ein Ausruf unterbricht den Satz','zus'],
+    ['Eine Partizip- oder Adjektivgruppe („vom Lärm geweckt“, „von der Arbeit erschöpft“) kommt vor','part'],
     ['Es geht um wörtliche Rede','wr']
   ]},
   rest:{f:'Dann liegt keine Teilsatz-Grenze vor. Worum geht es sonst?', o:[
     ['Es kommt „zu“ + Infinitiv vor','inf'],
     ['Gleichartige Wörter stehen nebeneinander, oder es folgt ein Gegensatz („aber“, „sondern“)','aufz'],
     ['Ein Zusatz, eine Anrede oder ein Ausruf unterbricht den Satz','zus'],
+    ['Eine Partizip- oder Adjektivgruppe („vom Lärm geweckt“, „von der Arbeit erschöpft“) kommt vor','part'],
     ['Es geht um wörtliche Rede','wr'],
     ['Nichts davon','kein']
   ]},
@@ -710,6 +743,15 @@ const ENT = {
   adj:{f:'Lässt sich „und“ zwischen die Adjektive setzen, ohne dass der Sinn kippt (oder lassen sie sich vertauschen)?',
     hilfe:'Probe: „eine kluge, freundliche Lehrerin“ → „klug und freundlich“ ✓. „Der erste große Erfolg“ → „erste und große“ ✗.',
     o:[['Ja','R_aufzKomma'],['Nein','R_adjKein']]},
+  part:{f:'Wie hängt die Partizip- oder Adjektivgruppe im Satz?',
+    hilfe:'Die Gruppe hat eine Erweiterung, aber keine eigene Personalform: „vom Regen durchnässt“, „von der Kritik unbeeindruckt“.',
+    o:[
+      ['Ein Hinweiswort („so“) kündigt sie an','R_partHin'],
+      ['Ein Hinweiswort („so“) nimmt sie wieder auf','R_partWied'],
+      ['Sie steht als Nachtrag direkt hinter einem Substantiv oder Pronomen und lässt sich wie eine Klammer herausnehmen','R_partNach'],
+      ['Sie steht vor dem Substantiv („der vom Sturm beschädigte Baum“)','R_partAttr'],
+      ['Nichts davon: Sie steht am Satzanfang oder nach dem Verb und gehört nur zur Aussage','R_partFrei']
+    ]},
   zus:{f:'Was unterbricht den Satz?', o:[
     ['Ein Nachtrag oder eine Erklärung (Apposition, „zum Beispiel“, „das heißt“, „und zwar“, Datum)','R_zus'],
     ['Eine Anrede oder ein Ausruf („Herr Müller, …“, „Ach, …“)','R_anrede']
@@ -729,6 +771,11 @@ const ENT = {
   R_aufzKomma:{r:'pflicht', titel:'Komma setzen', text:'Gleichrangige Teile werden durch Komma getrennt, ebenso steht vor „aber“, „sondern“, „doch“, „jedoch“ immer ein Komma.', ex:'Der Film war kurz, aber spannend.', fall:['aufzaehlung']},
   R_aufzKein:{r:'kein', titel:'Kein Komma', text:'Vor „und“, „oder“, „sowie“, „beziehungsweise“, „sowohl … als auch“, „weder … noch“ steht in einer Aufzählung kein Komma.', ex:'Sie kaufte Äpfel, Birnen und Pflaumen.', fall:['aufzaehlung']},
   R_adjKein:{r:'kein', titel:'Kein Komma', text:'Die Adjektive sind nicht gleichrangig: Das zweite gehört enger zum Nomen. Dann steht kein Komma.', ex:'Das war der erste große Erfolg.', fall:['aufzaehlung']},
+  R_partHin:{r:'pflicht', titel:'Komma setzen (Kommapaar)', text:'Kündigt ein Hinweiswort die Gruppe an, steht ein Komma nach dem Hinweiswort und eines am Ende der Gruppe.', ex:'So, vom Regen durchnässt, kam er nach Hause.', fall:['partizip']},
+  R_partWied:{r:'pflicht', titel:'Komma setzen', text:'Nimmt ein Hinweiswort die Gruppe wieder auf, steht ein einfaches Komma am Ende der Gruppe.', ex:'Von der Arbeit erschöpft, so ließ er sich aufs Sofa fallen.', fall:['partizip']},
+  R_partNach:{r:'pflicht', titel:'Komma setzen (Kommapaar)', text:'Ein Nachtrag direkt hinter einem Substantiv oder Pronomen wird von zwei Kommas eingeschlossen.', ex:'Sie, vom Erfolg beflügelt, schrieb sofort weiter.', fall:['partizip']},
+  R_partAttr:{r:'kein', titel:'Kein Komma', text:'Ein Partizip oder Adjektiv vor dem Substantiv gehört zur Nominalgruppe.', ex:'Der vom Sturm beschädigte Baum stürzte um.', fall:['partizip']},
+  R_partFrei:{r:'frei', titel:'Komma freigestellt', text:'Gehört die Gruppe nur zur Aussage und wirkt nicht wie ein Zusatz, darfst du selbst entscheiden: mit und ohne Komma ist richtig.', ex:'Vom Lärm geweckt stand er auf.', fall:['partizip']},
   R_zus:{r:'pflicht', titel:'Komma setzen', text:'Zusätze werden abgetrennt: nachgestellt mit einem Komma davor, eingeschoben mit zwei Kommas (wie Klammern).', ex:'Wien, die Hauptstadt Österreichs, liegt an der Donau.', fall:['zusaetze']},
   R_anrede:{r:'pflicht', titel:'Komma setzen', text:'Anrede und Ausruf werden vom übrigen Satz abgetrennt.', ex:'Herr Müller, kommen Sie bitte kurz zu mir.', fall:['zusaetze']},
   R_wrVor:{r:'kein', titel:'Doppelpunkt statt Komma', text:'Steht der Begleitsatz vor der wörtlichen Rede, folgt ein Doppelpunkt.', ex:'Sie sagte: „Ich komme morgen.“', fall:['woertlich']},

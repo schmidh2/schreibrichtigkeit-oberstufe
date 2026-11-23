@@ -20,7 +20,7 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 ## Aufbau von index.html
 - **Grundidee** (drei Schritte: Personalformen markieren, Grenzen prüfen, Rest abklopfen), **Entscheider**, **Auf einen Blick** (Tabelle aus `FAELLE`), **Kommafälle** (je eine aufklappbare Karte), **Mischtraining**, **Matura**.
 - `FAELLE`: je Fall `id`, `titel`, `tag`, `kurz`, `blick`, `regel`, `probe`, `beispiele`, `fallen`, optional `tipp`, `saetze`.
-  - Fälle: Aufzählung, Hauptsätze (Satzreihe), Nebensatz, Relativsatz, Infinitivgruppe, Zusätze/Anrede/Ausruf, wörtliche Rede. Das sind 64 Übungssätze.
+  - Fälle: Aufzählung, Hauptsätze (Satzreihe), Nebensatz, Relativsatz, Infinitivgruppe, Partizip- und Adjektivgruppen, Zusätze/Anrede/Ausruf, wörtliche Rede. Das sind 71 Übungssätze.
   - Neuer Fall: Objekt in `FAELLE` ergänzen, dann entstehen Karte, Tabellenzeile, Übung und Mischtraining von selbst. Im Entscheider `ENT` ein Ergebnis mit `fall:['<id>']` verknüpfen.
 - **Satzformat für den Komma-Setzer** (`saetze[].s`): Wörter durch Leerzeichen getrennt; ein angehängtes `,` am Wort = Pflicht-Komma danach, ein angehängtes `^` = freigestelltes Komma. `e` = Erklärungen in der Reihenfolge der Kommas (fehlen welche, wird die letzte wiederholt), `h` = Erklärung, wenn kein Komma steht. Am letzten Wort darf keine Marke stehen.
 - **Beispiele und Fehler** (`beispiele`, `fallen`): Kommas werden automatisch hervorgehoben; `[[x]]` markiert eine Fehlerstelle, `[[fehlt]]` ein fehlendes Komma. Funktion `markup()`.
@@ -29,15 +29,16 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 - Eine Datenprüfung (Anzahl Erklärungen je Satz, Ziele im Entscheider) lässt sich schnell per Node-Skript schreiben: `FAELLE` und `ENT` per Regex aus der Datei holen und auswerten. Beim Prototyp lief sie fehlerfrei.
 
 ## Inhaltliche Regeln
-- Regeln folgen dem **amtlichen Regelwerk** (Rat für deutsche Rechtschreibung). Wo es das Komma freistellt (Infinitivgruppen ohne um/ohne/statt, Substantiv oder Hinweiswort; „und/oder“ zwischen vollständigen Hauptsätzen), ist beides richtig und wird als freigestellt gekennzeichnet. Keine Paragrafennummern nennen, solange sie nicht geprüft sind.
+- Regeln folgen dem **amtlichen Regelwerk** (Rat für deutsche Rechtschreibung). Wo es das Komma freistellt (Infinitivgruppen ohne um/ohne/statt, Substantiv oder Hinweiswort; „und/oder“ zwischen vollständigen Hauptsätzen), ist beides richtig und wird als freigestellt gekennzeichnet. Paragrafennummern nur nennen, wenn sie im Regelwerk selbst nachgelesen sind (geprüft: § 75, § 77(5), § 77(7), § 78(3)).
 - Alle Beispielsätze sind eigene. Keine geschützten Texte.
+- **Partizip- und Adjektivgruppen** (Karte `partizip`): bewusst nur die **Pflichtfälle** nach amtlichem Regelwerk (Fassung 2016, redigiert 2018): Hinweiswort kündigt an oder nimmt wieder auf (§ 77(5)) und Nachtrag direkt hinter Substantiv/Pronomen (§ 77(7)). Freigestellt ist das Komma nach § 78(3), wenn die Gruppe nur zur Aussage gehört (Satzanfang ohne Hinweiswort, nach dem Verb); dazu gibt es **keine Übungssätze**, weil der Setzer jedes nicht erwartete Komma als Fehler wertet. Offen: Nachtrag am Satzende („…, aus vollem Halse lachend“) steht in § 77(7), die Abgrenzung zu den freigestellten Fällen in § 78(3) ist schmal. Deshalb weder Karte noch Übung dazu; vor einer Aufnahme Duden D 127 und Regelwerk gegenlesen.
 - Keine Links auf Seiten, die Bücher oder Texte verkaufen (Verlage, Shops, Partnerlinks). Erlaubt: matura.gv.at, bmb.gv.at, rechtschreibrat.com.
 - Wie die Sprachrichtigkeit im Beurteilungsraster gewichtet wird, steht nicht im Text, sondern nur als Link zum amtlichen Raster (vor einer Aussage dazu den Raster lesen).
 - Österreichische Anführungszeichen „…“. Umlaute und Sonderzeichen in URLs beachten.
 
 ## Offen / nächste Schritte
 - **Inhaltlich prüfen lassen:** alle Kommaregeln und Erklärungen, besonders Infinitivgruppen, Datum im Satz und „zum Beispiel/und zwar“. Noch nicht mit Schüler:innen erprobt.
-- Weitere Kommafälle: Partizip- und Adjektivgruppen, Komma bei Gliederungswörtern (erstens, schließlich), Komma in Briefen (Anrede, Datum, Anschrift), Komma bei Zahlen.
+- Weitere Kommafälle: Komma bei Gliederungswörtern (erstens, schließlich), Komma in Briefen (Anrede, Datum, Anschrift), Komma bei Zahlen.
 - Teil 2 **Rechtschreibung**: Groß- und Kleinschreibung (Nominalisierung, Tageszeiten), getrennt/zusammen, das/dass, Fremdwörter, österreichische Besonderheiten.
 - Teil 3 **Grammatik**: Kasus und Präpositionen, Kongruenz, Tempus, Konjunktiv bei indirekter Rede, Passiv und Nominalstil, Satzbrüche.
 - **Fehlerjagd** mit eigenen Matura-ähnlichen Texten und **Fehlerprofil** (lokal): zählt Fehlerarten mit und schlägt passende Karten vor.
