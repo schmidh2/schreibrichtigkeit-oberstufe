@@ -8,84 +8,74 @@
 <title>Schreibrichtigkeit – Komma</title>
 <style>
   :root{
-    --bg:#F2F0E9;
-    --surface:#FFFFFE;
-    --surface-2:#EAE7DD;
-    --ink:#1E2530;
-    --ink-soft:#57616F;
-    --ink-faint:#8B92A0;
-    --line:#DAD5C7;
-    --accent:#2E4C7A;
-    --accent-strong:#1F3557;
-    --accent-soft:#E3EAF3;
+    /* Design der Schulhomepage (gym.scp.ac.at), wie Textsortenatlas-Homepage und Unterstufen-Lernpfade */
+    --bg:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F1F6FC;
+    --ink:#333333;
+    --ink-soft:#5A5A5A;
+    --ink-faint:#7D7D7D;
+    --line:#E0DEDE;
+    --accent:#009FE3;
+    --accent-strong:#0E3C88;
+    --accent-soft:#D8E5F6;
+    --blue-mid:#436DB4;
+    --blue-dark:#0E3C88;
+    --blue-petrol:#0079AF;
+    --blue-light:#8CD3F6;
+    --link:#0079AF;
     --red:#A13A3A;
     --red-soft:#F5E3E1;
-    --red-strong:#7E2C2C;
-    --ok:#2F6B4F;
-    --ok-soft:#E1F0E7;
-    --warn:#8A5A12;
-    --warn-soft:#F6EBD3;
-    --shadow: 0 1px 2px rgba(30,37,48,.06), 0 8px 24px -12px rgba(30,37,48,.18);
-    --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
-    --font-body: 'Public Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --red-strong:#8A2E2E;
+    --ok:#1F7A55;
+    --ok-soft:#DFF1E8;
+    --warn:#9A6A00;
+    --warn-soft:#FFF1CC;
+    --radius:10px;
+    --shadow: 0 1px 2px rgba(14,60,136,.06), 0 8px 24px -12px rgba(14,60,136,.22);
+    --font-display:'Ubuntu', Arial, Helvetica, sans-serif;
+    --font-body:'Fira Sans', Arial, Helvetica, sans-serif;
+    --font-mono:'Fira Sans', Arial, Helvetica, sans-serif;
     color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#12161C; --surface:#191E26; --surface-2:#1F2530;
-      --ink:#E9E6DC; --ink-soft:#9CA6B3; --ink-faint:#6B7482; --line:#2B323D;
-      --accent:#8FB0DE; --accent-strong:#B7CDEA; --accent-soft:#20304A;
-      --red:#E08A82; --red-soft:#3A2222; --red-strong:#F2AFA8;
-      --ok:#7FC4A0; --ok-soft:#1D3328; --warn:#E0B66C; --warn-soft:#3A2E17;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
-      color-scheme: dark;
-    }
   }
 
   *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
   body{
     margin:0; background:var(--bg); color:var(--ink);
-    font-family:var(--font-body); font-size:16px; line-height:1.6;
+    font-family:var(--font-body); font-size:17px; line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
     *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
   }
-  a{ color:var(--accent); }
+  a{ color:var(--link); }
+  :focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
   h1,h2,h3,h4{ font-family:var(--font-display); color:var(--ink); margin:0; text-wrap:balance; }
   p{ margin:0; }
   ul,ol{ margin:0; padding:0; list-style:none; }
   button{ font-family:inherit; }
 
-  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
   main{ overflow-wrap:anywhere; min-width:0; }
 
-  /* ---------- Header ---------- */
-  header.site{
-    position:sticky; top:0; z-index:40;
-    background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .site-bar{
-    max-width:1080px; margin:0 auto; padding:14px 24px;
-    display:flex; align-items:baseline; justify-content:space-between; gap:20px;
-  }
-  .logotype{ display:flex; align-items:baseline; gap:2px; font-family:var(--font-display); font-size:1.35rem; flex-shrink:0; white-space:nowrap; }
-  .logotype b{ font-weight:700; }
-  .logotype i{ font-style:italic; font-weight:500; color:var(--accent); }
+  /* ---------- Kopfzeile (Stil der Schulhomepage) ---------- */
+  header.site{ background:var(--accent); color:#fff; }
+  @media (min-width:821px){ header.site{ position:sticky; top:0; z-index:40; } }
+  .site-bar{ max-width:1180px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .logotype{ font-family:var(--font-body); font-size:1.5rem; font-weight:400; color:#fff; text-decoration:none; white-space:nowrap; flex-shrink:0; }
+  .logotype i{ font-style:normal; font-weight:300; margin-left:.35em; }
   nav.chips{ display:flex; gap:8px; overflow-x:auto; padding:2px; scrollbar-width:none; }
   nav.chips::-webkit-scrollbar{ display:none; }
-  nav.chips a{
-    flex:none; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.04em; text-transform:uppercase;
-    color:var(--ink-soft); text-decoration:none;
-    border:1px solid var(--line); border-radius:999px; padding:6px 12px; white-space:nowrap;
-  }
-  nav.chips a:hover{ color:var(--accent); border-color:var(--accent); }
-  @media (max-width:640px){ .logotype{ font-size:1.1rem; } .site-bar{ padding:12px 16px; gap:12px; } .wrap{ padding:0 16px; } }
+  nav.chips a{ flex:none; font-family:var(--font-body); font-size:.8rem; color:#fff; text-decoration:none; background:var(--blue-petrol); border-radius:0 0 20px 0; padding:8px 22px 8px 10px; white-space:nowrap; }
+  nav.chips a:nth-child(4n+1){ background:var(--blue-light); color:var(--blue-dark); }
+  nav.chips a:nth-child(4n+2){ background:var(--blue-petrol); }
+  nav.chips a:nth-child(4n+3){ background:var(--blue-dark); }
+  nav.chips a:nth-child(4n+4){ background:var(--blue-mid); }
+  nav.chips a:hover{ filter:brightness(.92); }
+  nav.chips a:focus-visible, .logotype:focus-visible{ outline:3px solid #fff; outline-offset:2px; }
+  @media (max-width:820px){ .site-bar{ flex-wrap:wrap; gap:8px; padding:10px 16px; } .logotype{ font-size:1.25rem; } nav.chips{ flex:1 1 100%; } .wrap{ padding:0 16px; } }
 
   .hinweis{ background:var(--warn-soft); border-bottom:1px solid var(--warn); color:var(--ink); font-size:.88rem; line-height:1.5; }
   .hinweis .wrap{ padding-top:9px; padding-bottom:9px; }
@@ -95,9 +85,9 @@
   .hero{ padding:56px 0 40px; border-bottom:1px solid var(--line); }
   .hero-grid{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:48px; align-items:end; }
   @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; gap:28px; } .hero{ padding:36px 0 28px; } }
-  .eyebrow{ font-family:var(--font-mono); font-size:.75rem; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
-  .hero h1{ font-size:clamp(2.1rem, 4.4vw, 3.1rem); font-weight:600; line-height:1.08; }
-  .hero h1 em{ font-style:italic; color:var(--accent); font-weight:500; }
+  .eyebrow{ font-family:var(--font-mono); font-size:.75rem; letter-spacing:.09em; text-transform:uppercase; color:var(--blue-petrol); margin:0 0 14px; }
+  .hero h1{ font-size:clamp(2.1rem, 4.4vw, 3.1rem); font-weight:700; line-height:1.1; color:var(--accent); }
+  .hero h1 em{ font-style:normal; color:var(--accent); font-weight:700; }
   .hero p.lede{ margin-top:18px; font-size:1.1rem; color:var(--ink-soft); max-width:52ch; line-height:1.65; }
   .facts{ display:flex; flex-direction:column; gap:14px; }
   .fact{ display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--line); padding-bottom:12px; }
@@ -163,10 +153,10 @@
   /* ---------- Buttons ---------- */
   .btn{
     font-size:.9rem; font-weight:600; border-radius:8px; padding:9px 16px; cursor:pointer;
-    border:1px solid var(--accent); background:var(--accent); color:var(--surface);
+    border:1px solid var(--accent-strong); background:var(--accent-strong); color:#fff;
   }
-  .btn:hover{ background:var(--accent-strong); border-color:var(--accent-strong); }
-  .btn.sec{ background:transparent; color:var(--accent-strong); border-color:var(--line); }
+  .btn:hover{ filter:brightness(1.12); }
+  .btn.sec{ background:transparent; color:var(--accent-strong); border-color:var(--accent-strong); }
   .btn.sec:hover{ border-color:var(--accent); background:var(--accent-soft); }
   .btn[disabled]{ opacity:.45; cursor:not-allowed; }
   .linkbtn{ font-size:.85rem; color:var(--accent-strong); background:var(--accent-soft); border:1px solid transparent; border-radius:8px; padding:7px 12px; cursor:pointer; }
@@ -189,7 +179,7 @@
   details.fall > summary::-webkit-details-marker{ display:none; }
   details.fall > summary:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
   .f-head{ display:flex; flex-direction:column; gap:6px; min-width:0; }
-  .f-tag{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
+  .f-tag{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--blue-petrol); font-weight:500; }
   .f-head h3{ font-size:1.35rem; font-weight:600; hyphens:auto; -webkit-hyphens:auto; overflow-wrap:break-word; }
   @media (max-width:520px){ .f-head h3{ font-size:1.15rem; } }
   .f-kurz{ color:var(--ink-soft); font-size:.92rem; max-width:62ch; }
@@ -358,6 +348,21 @@
     .blatt.seitenumbruch{ margin-top:0; padding-top:0; border-top:none; }
   }
 
+  /* ---------- Bereiche und weitere Seiten ---------- */
+  .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr)); gap:16px; }
+  .tile{ display:block; background:var(--surface); border:1px solid var(--line); border-top:5px solid var(--acc,var(--accent-strong)); border-radius:var(--radius); padding:18px 20px; box-shadow:var(--shadow); color:var(--ink); text-decoration:none; }
+  a.tile:hover{ border-color:var(--acc); border-top-color:var(--acc); }
+  a.tile:focus-visible{ outline:3px solid var(--accent); outline-offset:2px; }
+  .tile .st{ font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:var(--acc,var(--accent-strong)); font-weight:600; }
+  .tile h3{ font-size:1.2rem; margin:6px 0; }
+  .tile p{ font-size:.92rem; color:var(--ink-soft); line-height:1.55; }
+  .tile .go{ display:inline-block; margin-top:10px; font-size:.88rem; font-weight:600; color:var(--link); }
+  .tile.bald{ background:var(--surface-2); border-style:dashed; border-top-style:solid; box-shadow:none; }
+  .tile.bald h3{ color:var(--ink-soft); }
+  .t1{ --acc:#0E3C88; } .t2{ --acc:#0079AF; } .t3{ --acc:#436DB4; }
+  #fallChips{ margin-bottom:18px; }
+  .more-note{ margin-top:14px; font-size:.88rem; color:var(--ink-soft); }
+
   footer{ padding:36px 0 56px; font-size:.85rem; color:var(--ink-soft); line-height:1.65; }
   footer .credit{ margin-top:10px; color:var(--ink-faint); }
   footer p{ max-width:80ch; }
@@ -367,7 +372,7 @@
 
 <header class="site">
   <div class="site-bar">
-    <div class="logotype"><b>Schreib</b><i>richtigkeit</i></div>
+    <a class="logotype" href="#">Schreibrichtigkeit <i>Oberstufe</i></a>
     <nav class="chips" aria-label="Abschnitte">
       <a href="#idee">Grundidee</a>
       <a href="#entscheider">Entscheider</a>
@@ -376,6 +381,7 @@
       <a href="#misch">Mischtraining</a>
       <a href="#profil">Mein Profil</a>
       <a href="#matura">Matura</a>
+      <a href="#mehr">Weitere Seiten</a>
     </nav>
   </div>
 </header>
@@ -396,6 +402,21 @@
         <div class="facts" id="facts"></div>
       </div>
       <p class="intro-note">Die Regeln folgen dem <strong>amtlichen Regelwerk</strong> der deutschen Rechtschreibung. Wo das Regelwerk ein Komma <strong>freigestellt</strong> lässt, gilt beides als richtig – das ist in den Übungen gekennzeichnet. Alle Beispielsätze sind eigene Beispiele. Der Lernfortschritt bleibt in deinem Browser.</p>
+    </div>
+  </section>
+
+  <section class="block" id="bereiche">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Was es hier gibt</h2>
+        <p>Die Seite wächst Bereich für Bereich. Fertig ist das Komma, Rechtschreibung und Grammatik folgen.</p>
+      </div>
+      <div class="tiles">
+        <a class="tile t1" href="#faelle"><span class="st">Verfügbar</span><h3>Komma</h3><p>Entscheider, acht Kommafälle mit Regel, Probe und typischen Fehlern, Übungssätze und Arbeitsblätter.</p><span class="go">Zu den Kommafällen →</span></a>
+        <a class="tile t2" href="#profil"><span class="st">Verfügbar</span><h3>Mein Fehlerprofil</h3><p>Zeigt, wo du Fehler machst, empfiehlt Übungen und holt falsche Sätze automatisch wieder.</p><span class="go">Zum Profil →</span></a>
+        <div class="tile t3 bald"><span class="st">In Planung</span><h3>Rechtschreibung</h3><p>Groß- und Kleinschreibung, getrennt oder zusammen, das und dass, Fremdwörter.</p></div>
+        <div class="tile t1 bald"><span class="st">In Planung</span><h3>Grammatik</h3><p>Kasus, Konjunktiv bei indirekter Rede, Bezüge und Satzbau.</p></div>
+      </div>
     </div>
   </section>
 
@@ -458,6 +479,7 @@
         <h2>Die Kommafälle im Detail</h2>
         <p>Jede Karte lässt sich aufklappen: Regel und Probe, Beispiele, typische Fehler – und unten die Übung zum Kommasetzen.</p>
       </div>
+      <div class="chiprow" id="fallChips" role="group" aria-label="Kommafall direkt öffnen"></div>
       <div class="f-list" id="flist"></div>
     </div>
   </section>
@@ -537,10 +559,24 @@
     </div>
   </section>
 
+  <section class="block" id="mehr">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Weitere Seiten</h2>
+        <p>Dazu passende Materialien für den Deutschunterricht. Sie öffnen in einem neuen Tab.</p>
+      </div>
+      <div class="tiles">
+        <a class="tile t1" href="https://schmidh2.github.io/Textsortenatlas/" target="_blank" rel="noopener noreferrer"><span class="st">Oberstufe · Matura</span><h3>Textsortenatlas</h3><p>Die sieben Textsorten der Matura mit Merkmalen, Aufbau, Formulierungshilfen und Stilmittel-Übungen.</p><span class="go">Textsortenatlas öffnen ↗</span></a>
+        <a class="tile t2" href="https://schmidh2.github.io/deutsch-unterstufe-lernpfad/" target="_blank" rel="noopener noreferrer"><span class="st">Unterstufe</span><h3>Deutsch-Lernpfad</h3><p>Rechtschreibung, Grammatik und Textsorten für die 5. bis 8. Schulstufe. Die Kapitel gibt die Lehrkraft frei.</p><span class="go">Deutsch-Lernpfad öffnen ↗</span></a>
+        <a class="tile t3" href="https://schmidh2.github.io/digitale-grundbildung-lernpfad/" target="_blank" rel="noopener noreferrer"><span class="st">Unterstufe</span><h3>Digitale Grundbildung</h3><p>Lernpfad für das Fach Digitale Grundbildung in der Sekundarstufe I. Die Kapitel gibt die Lehrkraft frei.</p><span class="go">Digitale Grundbildung öffnen ↗</span></a>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="wrap">
       <p>Die Karten erklären die Regeln in knapper Form und ersetzen nicht das amtliche Regelwerk. Bei Sonderfällen gilt dessen Wortlaut.</p>
-      <p class="credit">Erstellt von Mag. Harald Schmidt, Lehrer am Gymnasium Sacré Coeur Pressbaum · mit Unterstützung von <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude</a></p>
+      <p class="credit">Erstellt von Mag. Harald Schmidt, Lehrer am <a href="https://gym.scp.ac.at/" target="_blank" rel="noopener noreferrer">Gymnasium Sacré Coeur Pressbaum</a> · mit Unterstützung von <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude</a></p>
     </div>
   </footer>
 </main>
@@ -1572,13 +1608,26 @@ function oeffneAusUrl(){
   if (m) oeffneBlatt(m[1], m[2]);
 }
 
+/* Schnellwahl der Kommafälle und Sprungmarken (#f-<fall> öffnet die Karte) */
+const NAV_KURZ = {aufzaehlung:'Aufzählung', satzreihe:'Hauptsätze', nebensatz:'Nebensatz', relativsatz:'Relativsatz', infinitiv:'Infinitivgruppe', partizip:'Partizipgruppe', zusaetze:'Zusätze', woertlich:'Wörtliche Rede'};
+function buildFallChips(){
+  $('#fallChips').innerHTML = FAELLE.map(f => `<button type="button" class="chipbtn" data-open="${f.id}">${esc(NAV_KURZ[f.id] || f.titel)}</button>`).join('');
+}
+function ausHash(){
+  const h = location.hash.replace(/^#/, '');
+  if (h.indexOf('f-') === 0) openFall(h.slice(2));
+}
+window.addEventListener('hashchange', ausHash);
+
 buildFacts();
 buildBlick();
 buildFaelle();
 buildMix();
 buildEnt();
+buildFallChips();
 updateStand();
 oeffneAusUrl();
+ausHash();
 </script>
 </body>
 </html>

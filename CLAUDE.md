@@ -11,13 +11,14 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 
 ## Technik
 - Eine einzige, in sich geschlossene `index.html` (HTML + CSS + JS), keine Build-Schritte.
-- **Keine externen Schriften.** Die Schrift-Tokens nennen Fraunces/Public Sans/IBM Plex Mono zuerst, fallen aber auf Systemschriften zurück (Datenschutz, kein Google-Fonts-Aufruf). Wer das Aussehen des Textsortenatlas will, legt die Schriftdateien selbst auf den Server und bindet sie per `@font-face` ein.
+- **Schriften:** Das Design nennt **Fira Sans** (Text) und **Ubuntu** (Überschriften) wie die Schwesterseiten, lädt sie aber **nicht** von Google (Datenschutz). Ohne die Schriftdateien greift der Ersatz Arial/Helvetica. Für das identische Aussehen die Schriftdateien (Fira Sans und Ubuntu, freie Lizenzen) in einen Ordner der Seite legen und per `@font-face` einbinden; die Schriften der Schwesterseiten kommen noch von Google Fonts.
 - Inhalte als Datenobjekte im `<script>` (`FAELLE`, `ENT`), die Seite wird per JS gerendert.
-- Design: Tokens als CSS-Variablen (hell/dunkel), von den Atlas-Farben übernommen, dazu `--ok` und `--warn`.
+- **Design: Schulhomepage (gym.scp.ac.at)**, wie die Homepage-Variante des Textsortenatlas und die Unterstufen-Lernpfade: weißer Hintergrund, Blau `#009FE3` und `#0E3C88`, blauer Kopf mit vierfarbigen Reitern (Ecke unten rechts abgerundet), nur hell (kein Dunkelmodus). Tokens als CSS-Variablen, dazu `--ok`, `--warn`, `--red`. Kopf ist ab 821 px breit angeheftet, auf dem Handy nicht.
 - Lernfortschritt nur lokal im Browser (`localStorage`, Schlüssel `srk.v1`, `{solved:{"<fall>:<index>":1}}`). Keine Konten, keine Freigaben, keine Kontrollen (für die Oberstufe nicht gewünscht).
 - Lokal testen: `python3 -m http.server`.
 
 ## Aufbau von index.html
+- **Navigation und Links:** Kopfreiter Grundidee, Entscheider, Auf einen Blick, Kommafälle, Mischtraining, Mein Profil, Matura, Weitere Seiten. Abschnitt **Was es hier gibt** (Kacheln: Komma und Fehlerprofil verfügbar, Rechtschreibung und Grammatik „In Planung“ ohne Link, damit kein toter Link entsteht). Unter „Kommafälle“ eine **Schnellwahl** (`#fallChips`). Sprungmarken `#f-<fall>` öffnen die Karte (`ausHash()`). Abschnitt **Weitere Seiten** verlinkt Textsortenatlas, Deutsch-Lernpfad Unterstufe und Digitale Grundbildung (alle erreichbar geprüft am 23.11.2026); Fußzeile verlinkt die Schulhomepage. Neue Links immer mit `target="_blank" rel="noopener noreferrer"`; Link-Prüfung: Anker gegen vorhandene IDs, externe Adressen per HTTP-Status.
 - **Grundidee** (drei Schritte: Personalformen markieren, Grenzen prüfen, Rest abklopfen), **Entscheider**, **Auf einen Blick** (Tabelle aus `FAELLE`), **Kommafälle** (je eine aufklappbare Karte), **Mischtraining**, **Matura**.
 - `FAELLE`: je Fall `id`, `titel`, `tag`, `kurz`, `blick`, `regel`, `probe`, `beispiele`, `fallen`, optional `tipp`, `saetze`.
   - Fälle: Aufzählung, Hauptsätze (Satzreihe), Nebensatz, Relativsatz, Infinitivgruppe, Partizip- und Adjektivgruppen, Zusätze/Anrede/Ausruf, wörtliche Rede. Das sind 75 Übungssätze.
