@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Mag. Harald Schmidt, Gymnasium Sacré Coeur Pressbaum">
+<meta name="description" content="Kommasetzung für die Oberstufe: Entscheider, Kommafälle mit Regel, Probe und typischen Fehlern, dazu Online-Übungen zum Kommasetzen.">
+<title>Schreibrichtigkeit – Komma</title>
+<style>
+  :root{
+    --bg:#F2F0E9;
+    --surface:#FFFFFE;
+    --surface-2:#EAE7DD;
+    --ink:#1E2530;
+    --ink-soft:#57616F;
+    --ink-faint:#8B92A0;
+    --line:#DAD5C7;
+    --accent:#2E4C7A;
+    --accent-strong:#1F3557;
+    --accent-soft:#E3EAF3;
+    --red:#A13A3A;
+    --red-soft:#F5E3E1;
+    --red-strong:#7E2C2C;
+    --ok:#2F6B4F;
+    --ok-soft:#E1F0E7;
+    --warn:#8A5A12;
+    --warn-soft:#F6EBD3;
+    --shadow: 0 1px 2px rgba(30,37,48,.06), 0 8px 24px -12px rgba(30,37,48,.18);
+    --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+    --font-body: 'Public Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --surface:#191E26; --surface-2:#1F2530;
+      --ink:#E9E6DC; --ink-soft:#9CA6B3; --ink-faint:#6B7482; --line:#2B323D;
+      --accent:#8FB0DE; --accent-strong:#B7CDEA; --accent-soft:#20304A;
+      --red:#E08A82; --red-soft:#3A2222; --red-strong:#F2AFA8;
+      --ok:#7FC4A0; --ok-soft:#1D3328; --warn:#E0B66C; --warn-soft:#3A2E17;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
+      color-scheme: dark;
+    }
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+  a{ color:var(--accent); }
+  h1,h2,h3,h4{ font-family:var(--font-display); color:var(--ink); margin:0; text-wrap:balance; }
+  p{ margin:0; }
+  ul,ol{ margin:0; padding:0; list-style:none; }
+  button{ font-family:inherit; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+  main{ overflow-wrap:anywhere; min-width:0; }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .site-bar{
+    max-width:1080px; margin:0 auto; padding:14px 24px;
+    display:flex; align-items:baseline; justify-content:space-between; gap:20px;
+  }
+  .logotype{ display:flex; align-items:baseline; gap:2px; font-family:var(--font-display); font-size:1.35rem; flex-shrink:0; white-space:nowrap; }
+  .logotype b{ font-weight:700; }
+  .logotype i{ font-style:italic; font-weight:500; color:var(--accent); }
+  nav.chips{ display:flex; gap:8px; overflow-x:auto; padding:2px; scrollbar-width:none; }
+  nav.chips::-webkit-scrollbar{ display:none; }
+  nav.chips a{
+    flex:none; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--ink-soft); text-decoration:none;
+    border:1px solid var(--line); border-radius:999px; padding:6px 12px; white-space:nowrap;
+  }
+  nav.chips a:hover{ color:var(--accent); border-color:var(--accent); }
+  @media (max-width:640px){ .logotype{ font-size:1.1rem; } .site-bar{ padding:12px 16px; gap:12px; } .wrap{ padding:0 16px; } }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding:56px 0 40px; border-bottom:1px solid var(--line); }
+  .hero-grid{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:48px; align-items:end; }
+  @media (max-width:820px){ .hero-grid{ grid-template-columns:1fr; gap:28px; } .hero{ padding:36px 0 28px; } }
+  .eyebrow{ font-family:var(--font-mono); font-size:.75rem; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); margin:0 0 14px; }
+  .hero h1{ font-size:clamp(2.1rem, 4.4vw, 3.1rem); font-weight:600; line-height:1.08; }
+  .hero h1 em{ font-style:italic; color:var(--accent); font-weight:500; }
+  .hero p.lede{ margin-top:18px; font-size:1.1rem; color:var(--ink-soft); max-width:52ch; line-height:1.65; }
+  .facts{ display:flex; flex-direction:column; gap:14px; }
+  .fact{ display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--line); padding-bottom:12px; }
+  .fact .n{ font-family:var(--font-display); font-size:1.7rem; font-weight:600; color:var(--accent); min-width:64px; }
+  .fact .d{ font-size:.88rem; color:var(--ink-soft); line-height:1.4; }
+  .intro-note{ margin-top:32px; padding-top:28px; border-top:1px dashed var(--line); font-size:.98rem; color:var(--ink-soft); max-width:78ch; line-height:1.7; }
+  .intro-note strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Sections ---------- */
+  section.block{ padding:52px 0; border-bottom:1px solid var(--line); scroll-margin-top:60px; }
+  .block-head{ margin-bottom:28px; max-width:70ch; }
+  .block-head h2{ font-size:1.7rem; font-weight:600; }
+  .block-head p{ margin-top:10px; color:var(--ink-soft); font-size:1rem; }
+  .subhead{ margin:36px 0 14px; }
+  .subhead h3{ font-size:1.2rem; font-weight:600; }
+  .subhead p{ margin-top:6px; color:var(--ink-soft); font-size:.95rem; max-width:70ch; }
+
+  /* Kommas in Beispielen */
+  .k{ color:var(--accent-strong); font-weight:700; background:var(--accent-soft); border-radius:3px; padding:0 2px; }
+  .err{ color:var(--red-strong); background:var(--red-soft); border-radius:3px; padding:0 4px; font-weight:600; font-size:.88em; }
+  .err:empty::before{ content:"·"; }
+  .pv{ color:var(--accent-strong); font-weight:600; border-bottom:2px solid var(--accent); }
+
+  /* ---------- Drei Schritte ---------- */
+  .steps{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  @media (max-width:820px){ .steps{ grid-template-columns:1fr; } }
+  .step{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:20px; }
+  .step .idx{ font-family:var(--font-mono); font-size:.72rem; color:var(--ink-faint); letter-spacing:.06em; }
+  .step h4{ font-size:1.05rem; margin-top:6px; font-weight:600; }
+  .step p{ margin-top:8px; font-size:.9rem; color:var(--ink-soft); line-height:1.55; }
+  .step .ex{ margin-top:12px; font-size:.95rem; background:var(--accent-soft); border-radius:6px; padding:8px 11px; line-height:1.6; }
+  .merke{ margin-top:18px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  @media (max-width:820px){ .merke{ grid-template-columns:1fr; } }
+  .merke > div{ border-left:3px solid var(--accent); background:var(--surface); border-radius:0 8px 8px 0; padding:12px 16px; font-size:.92rem; color:var(--ink-soft); line-height:1.55; }
+  .merke b{ color:var(--ink); }
+
+  /* ---------- Entscheider ---------- */
+  .ent{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); padding:24px 26px; max-width:820px; }
+  .ent-trail{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; min-height:24px; }
+  .ent-trail span{ font-family:var(--font-mono); font-size:.68rem; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:3px 8px; max-width:100%; }
+  .ent-q{ font-family:var(--font-display); font-size:1.2rem; font-weight:600; line-height:1.4; }
+  .ent-hilfe{ margin-top:10px; font-size:.9rem; color:var(--ink-soft); line-height:1.6; background:var(--accent-soft); border-radius:8px; padding:10px 13px; }
+  .ent-opts{ display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+  .ent-opt{
+    text-align:left; font-size:.95rem; line-height:1.5; color:var(--ink);
+    background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:12px 16px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .ent-opt:hover{ border-color:var(--accent); background:var(--accent-soft); }
+  .ent-opt:focus-visible, .btn:focus-visible, .w:focus-visible, .chipbtn:focus-visible, .linkbtn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .ent-nav{ display:flex; gap:10px; margin-top:18px; }
+  .ent-res{ border-radius:10px; padding:16px 18px; margin-top:4px; }
+  .ent-res.pflicht{ background:var(--accent-soft); border:1px solid var(--accent); }
+  .ent-res.kein{ background:var(--surface-2); border:1px solid var(--line); }
+  .ent-res.frei{ background:var(--warn-soft); border:1px solid var(--warn); }
+  .res-tag{ font-family:var(--font-mono); font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; }
+  .pflicht .res-tag{ color:var(--accent-strong); } .kein .res-tag{ color:var(--ink-soft); } .frei .res-tag{ color:var(--warn); }
+  .ent-res h3{ font-size:1.25rem; margin:6px 0 8px; }
+  .ent-res p{ font-size:.95rem; line-height:1.65; }
+  .ent-res .ex{ margin-top:10px; font-size:1rem; }
+  .ent-links{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    font-size:.9rem; font-weight:600; border-radius:8px; padding:9px 16px; cursor:pointer;
+    border:1px solid var(--accent); background:var(--accent); color:var(--surface);
+  }
+  .btn:hover{ background:var(--accent-strong); border-color:var(--accent-strong); }
+  .btn.sec{ background:transparent; color:var(--accent-strong); border-color:var(--line); }
+  .btn.sec:hover{ border-color:var(--accent); background:var(--accent-soft); }
+  .btn[disabled]{ opacity:.45; cursor:not-allowed; }
+  .linkbtn{ font-size:.85rem; color:var(--accent-strong); background:var(--accent-soft); border:1px solid transparent; border-radius:8px; padding:7px 12px; cursor:pointer; }
+  .linkbtn:hover{ border-color:var(--accent); }
+
+  /* ---------- Überblick-Tabelle ---------- */
+  .matrix-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+  table.blick{ border-collapse:collapse; width:100%; min-width:640px; font-size:.9rem; }
+  table.blick th{ text-align:left; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); padding:12px 16px; border-bottom:1px solid var(--line); background:var(--surface-2); }
+  table.blick td{ padding:12px 16px; border-top:1px solid var(--line); vertical-align:top; line-height:1.5; }
+  table.blick tr:first-child td{ border-top:none; }
+  table.blick td:first-child{ font-weight:600; white-space:nowrap; }
+  table.blick td:first-child a{ text-decoration:none; color:var(--ink); }
+  table.blick td:first-child a:hover{ color:var(--accent); }
+
+  /* ---------- Kommafälle (Karten) ---------- */
+  .f-list{ display:flex; flex-direction:column; gap:18px; }
+  details.fall{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; scroll-margin-top:76px; }
+  details.fall > summary{ list-style:none; cursor:pointer; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  details.fall > summary::-webkit-details-marker{ display:none; }
+  details.fall > summary:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .f-head{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .f-tag{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); }
+  .f-head h3{ font-size:1.35rem; font-weight:600; }
+  .f-kurz{ color:var(--ink-soft); font-size:.92rem; max-width:62ch; }
+  .f-side{ display:flex; align-items:center; gap:14px; flex:none; }
+  .stand{ font-family:var(--font-mono); font-size:.7rem; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:3px 8px; white-space:nowrap; }
+  .stand.voll{ color:var(--ok); background:var(--ok-soft); border-color:var(--ok); }
+  .chev{ flex:none; width:30px; height:30px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; color:var(--ink-soft); font-size:1rem; transition:transform .2s ease; }
+  details.fall[open] .chev{ transform:rotate(45deg); }
+  @media (max-width:640px){ .stand{ display:none; } details.fall > summary{ padding:16px; } .f-body{ padding:0 16px 22px; } }
+  .f-body{ padding:0 24px 28px; display:flex; flex-direction:column; gap:16px; }
+  .f-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; }
+  @media (max-width:760px){ .f-grid{ grid-template-columns:1fr; } }
+  .panel{ min-width:0; border:1px solid var(--line); border-radius:10px; padding:16px 18px; background:var(--surface); }
+  .panel h4{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .panel h4 .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); }
+  .panel p{ font-size:.95rem; line-height:1.65; }
+  .panel p + p{ margin-top:8px; }
+  .beispiele{ display:flex; flex-direction:column; gap:10px; }
+  .beispiele li{ font-size:1rem; line-height:1.55; background:var(--accent-soft); border-radius:8px; padding:9px 12px; }
+  .beispiele li small{ display:block; margin-top:3px; font-size:.82rem; color:var(--ink-soft); }
+  .problem-panel{ border-color:var(--red-soft); }
+  .problem-panel h4{ color:var(--red-strong); }
+  .problem-panel h4 .dot{ background:var(--red); }
+  .fehler{ display:flex; flex-direction:column; gap:14px; }
+  .fehler li{ border-top:1px dotted var(--line); padding-top:12px; }
+  .fehler li:first-child{ border-top:none; padding-top:0; }
+  .fehler .row{ display:grid; grid-template-columns:70px minmax(0,1fr); gap:8px; font-size:.97rem; line-height:1.55; margin-bottom:4px; }
+  .fehler .lab{ font-family:var(--font-mono); font-size:.68rem; letter-spacing:.05em; text-transform:uppercase; padding-top:4px; }
+  .fehler .lab.f{ color:var(--red-strong); } .fehler .lab.r{ color:var(--ok); }
+  .fehler .warum{ font-size:.86rem; color:var(--ink-soft); line-height:1.5; margin-top:4px; padding-left:78px; }
+  @media (max-width:520px){ .fehler .warum{ padding-left:0; } .fehler .row{ grid-template-columns:1fr; gap:0; } }
+  .tipp{ border-left:3px solid var(--warn); background:var(--warn-soft); border-radius:0 8px 8px 0; padding:10px 14px; font-size:.92rem; line-height:1.55; }
+
+  /* ---------- Setzer ---------- */
+  .sz{ border:1px solid var(--line); border-radius:12px; padding:18px 20px; background:var(--surface-2); }
+  .sz-top{ display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); letter-spacing:.04em; }
+  .sz-fall{ color:var(--accent-strong); }
+  .sz-hint{ margin-top:10px; font-size:.84rem; color:var(--ink-soft); }
+  .sz-satz{ margin:14px 0 6px; font-family:var(--font-display); font-size:1.3rem; line-height:2.5; }
+  .sz-satz .w{
+    font:inherit; color:inherit; background:none; border:none; border-bottom:2px dotted var(--ink-faint);
+    padding:0 2px; margin:0; cursor:pointer; border-radius:3px;
+  }
+  .sz-satz .w:hover{ background:var(--accent-soft); border-bottom-color:var(--accent); }
+  .sz-satz .w.static{ cursor:default; border-bottom:none; }
+  .sz-satz .c{ font-weight:700; padding:0 1px; border-radius:3px; }
+  .sz-satz .c.on{ color:var(--accent-strong); }
+  .sz-satz .c.ok{ color:var(--ok); background:var(--ok-soft); }
+  .sz-satz .c.miss{ color:var(--red-strong); background:var(--red-soft); outline:2px dashed var(--red); outline-offset:1px; padding:0 3px; }
+  .sz-satz .c.extra{ color:var(--red-strong); background:var(--red-soft); text-decoration:line-through; }
+  .sz-satz .c.frei{ color:var(--warn); background:var(--warn-soft); }
+  .sz-actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+  .sz-out{ margin-top:14px; }
+  .sz-status{ font-weight:600; font-size:1rem; padding:8px 12px; border-radius:8px; display:inline-block; }
+  .sz-status.ok{ color:var(--ok); background:var(--ok-soft); }
+  .sz-status.nok{ color:var(--red-strong); background:var(--red-soft); }
+  .sz-legend{ margin-top:8px; font-size:.8rem; color:var(--ink-soft); }
+  .sz-expl{ margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+  .sz-expl li{ font-size:.9rem; line-height:1.55; padding:8px 12px; background:var(--surface); border:1px solid var(--line); border-radius:8px; }
+  .sz-expl li b{ color:var(--accent-strong); }
+  .sz-expl li.x b{ color:var(--red-strong); }
+  .sz-expl li.f b{ color:var(--warn); }
+  .sz-end{ text-align:center; padding:14px 0 6px; }
+  .sz-end .big{ font-family:var(--font-display); font-size:1.6rem; font-weight:600; color:var(--accent-strong); }
+  .sz-end p{ margin-top:6px; color:var(--ink-soft); font-size:.95rem; }
+
+  /* ---------- Mischtraining ---------- */
+  .mix-setup{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:16px; }
+  .mix-setup h3{ font-size:1.05rem; margin-bottom:10px; }
+  .chiprow{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chipbtn{ font-size:.85rem; border:1px solid var(--line); background:var(--surface-2); color:var(--ink-soft); border-radius:999px; padding:6px 13px; cursor:pointer; }
+  .chipbtn[aria-pressed="true"]{ background:var(--accent-soft); border-color:var(--accent); color:var(--accent-strong); font-weight:600; }
+  .mix-opts{ display:flex; flex-wrap:wrap; align-items:center; gap:16px; margin-top:14px; font-size:.9rem; color:var(--ink-soft); }
+  .mix-opts label{ display:flex; align-items:center; gap:7px; cursor:pointer; }
+  .mix-opts select{ font:inherit; font-size:.9rem; padding:4px 8px; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); }
+  .stand-line{ margin-top:14px; font-size:.88rem; color:var(--ink-soft); display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+
+  /* ---------- Matura ---------- */
+  .m-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+  @media (max-width:820px){ .m-grid{ grid-template-columns:1fr; } }
+  .m-grid .panel p{ color:var(--ink-soft); font-size:.92rem; }
+  .check{ display:flex; flex-direction:column; gap:10px; counter-reset:c; }
+  .check li{ counter-increment:c; display:grid; grid-template-columns:30px 1fr; gap:10px; font-size:.95rem; line-height:1.55; }
+  .check li::before{ content:counter(c); font-family:var(--font-mono); color:var(--accent); font-weight:600; }
+  .quellen{ display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin-top:22px; padding:14px 16px; background:var(--accent-soft); border-radius:10px; font-size:.9rem; color:var(--ink-soft); }
+  .geplant{ margin-top:22px; font-size:.9rem; color:var(--ink-soft); }
+  .geplant b{ color:var(--ink); }
+
+  footer{ padding:36px 0 56px; font-size:.85rem; color:var(--ink-soft); line-height:1.65; }
+  footer .credit{ margin-top:10px; color:var(--ink-faint); }
+  footer p{ max-width:80ch; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <div class="logotype"><b>Schreib</b><i>richtigkeit</i></div>
+    <nav class="chips" aria-label="Abschnitte">
+      <a href="#idee">Grundidee</a>
+      <a href="#entscheider">Entscheider</a>
+      <a href="#blick">Auf einen Blick</a>
+      <a href="#faelle">Kommafälle</a>
+      <a href="#misch">Mischtraining</a>
+      <a href="#matura">Matura</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Sprachrichtigkeit · Oberstufe · Teil 1: Komma</p>
+          <h1>Das Komma,<br><em>Fall für Fall.</em></h1>
+          <p class="lede">Zu jedem Kommafall: die Regel in wenigen Sätzen, eine Probe zum Überprüfen, die typischen Fehler – und Sätze, in die du die Kommas selbst setzt. Statt „klingt richtig“ gibt es einen Weg, der immer funktioniert.</p>
+        </div>
+        <div class="facts" id="facts"></div>
+      </div>
+      <p class="intro-note">Die Regeln folgen dem <strong>amtlichen Regelwerk</strong> der deutschen Rechtschreibung. Wo das Regelwerk ein Komma <strong>freigestellt</strong> lässt, gilt beides als richtig – das ist in den Übungen gekennzeichnet. Alle Beispielsätze sind eigene Beispiele. Der Lernfortschritt bleibt in deinem Browser.</p>
+    </div>
+  </section>
+
+  <section class="block" id="idee">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Die Grundidee: drei Schritte statt Bauchgefühl</h2>
+        <p>Die meisten Kommas entstehen an den Grenzen zwischen Teilsätzen. Wer diese Grenzen findet, hat den größten Teil der Arbeit erledigt.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="idx">SCHRITT 1</span>
+          <h4>Personalformen markieren</h4>
+          <p>Jedes gebeugte Verb (Personalform) gehört zu einem Teilsatz. Zwei Personalformen heißen zwei Teilsätze.</p>
+          <p class="ex">Sie <span class="pv">hofft</span>, dass die Prüfung fair <span class="pv">ist</span>.<br><small>2 Personalformen → 2 Teilsätze</small></p>
+        </div>
+        <div class="step">
+          <span class="idx">SCHRITT 2</span>
+          <h4>Grenzen prüfen</h4>
+          <p>Zwischen zwei Teilsätzen steht in der Regel ein Komma. Ausnahme: Zwei Hauptsätze oder zwei gleichrangige Nebensätze, die mit <i>und</i> oder <i>oder</i> verbunden sind.</p>
+          <p class="ex">Sie hofft<span class="k">,</span> dass die Prüfung fair ist und dass sie alles schafft.</p>
+        </div>
+        <div class="step">
+          <span class="idx">SCHRITT 3</span>
+          <h4>Den Rest abklopfen</h4>
+          <p>Dann bleiben nur noch Aufzählungen, Zusätze, Infinitivgruppen und wörtliche Rede – jeweils mit eigener Regel.</p>
+          <p class="ex">Wien<span class="k">,</span> die Hauptstadt<span class="k">,</span> liegt an der Donau.</p>
+        </div>
+      </div>
+      <div class="merke">
+        <div><b>Merke:</b> Zwischen Subjekt und Prädikat steht kein Komma – außer ein eingeschobener Zusatz oder Nebensatz trennt sie (dann zwei Kommas).</div>
+        <div><b>Merke:</b> Ein eingeschobener Teil steht zwischen <b>zwei</b> Kommas, wie zwischen Klammern. Das zweite Komma wird am häufigsten vergessen.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="entscheider">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Komma-Entscheider</h2>
+        <p>Du stehst an einer Stelle im Satz und bist unsicher? Beantworte ein paar Fragen, am Ende steht die Regel – mit Link zur passenden Karte.</p>
+      </div>
+      <div class="ent" id="ent" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="block" id="blick">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Auf einen Blick</h2>
+        <p>Alle Kommafälle in einer Tabelle. Ein Klick auf den Namen öffnet die Karte mit Regel, Probe, Fehlern und Übungen.</p>
+      </div>
+      <div class="matrix-wrap"><table class="blick" id="blickTab"></table></div>
+    </div>
+  </section>
+
+  <section class="block" id="faelle">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Die Kommafälle im Detail</h2>
+        <p>Jede Karte lässt sich aufklappen: Regel und Probe, Beispiele, typische Fehler – und unten die Übung zum Kommasetzen.</p>
+      </div>
+      <div class="f-list" id="flist"></div>
+    </div>
+  </section>
+
+  <section class="block" id="misch">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Mischtraining</h2>
+        <p>Hier kommen die Fälle durcheinander – wie im echten Text, wo niemand sagt, welche Regel gerade dran ist. Wähle die Fälle aus und starte eine Runde.</p>
+      </div>
+      <div class="mix-setup">
+        <h3>Runde zusammenstellen</h3>
+        <div class="chiprow" id="mixChips" role="group" aria-label="Kommafälle auswählen"></div>
+        <div class="mix-opts">
+          <label>Anzahl
+            <select id="mixN"><option>5</option><option selected>10</option><option>15</option><option>20</option></select>
+          </label>
+          <label><input type="checkbox" id="mixNew" checked> ungelöste Sätze bevorzugen</label>
+          <button type="button" class="btn" id="mixStart">Runde starten</button>
+        </div>
+        <div class="stand-line"><span id="standGesamt"></span><button type="button" class="linkbtn" id="resetProg">Fortschritt zurücksetzen</button></div>
+      </div>
+      <div id="mixRun"></div>
+    </div>
+  </section>
+
+  <section class="block" id="matura">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Komma und Matura</h2>
+        <p>Die Sprachrichtigkeit ist eines der vier Beurteilungskriterien bei der schriftlichen Reife- und Diplomprüfung. Zeichensetzung gehört dazu.</p>
+      </div>
+      <div class="m-grid">
+        <div class="panel">
+          <h4><span class="dot"></span>Wo das Komma zählt</h4>
+          <p>Zeichensetzung wird unter „Sprachrichtigkeit“ mitbewertet – neben Rechtschreibung und Grammatik. Wie Fehler gewichtet werden, steht im amtlichen Beurteilungsraster. Dort nachlesen, nicht raten.</p>
+        </div>
+        <div class="panel">
+          <h4><span class="dot"></span>Freigestelltes ist kein Fehler</h4>
+          <p>Wo das Regelwerk das Komma freistellt (zum Beispiel bei manchen Infinitivgruppen oder vor <i>und</i> zwischen Hauptsätzen), ist beides richtig. Wichtig ist, dass du ein Komma nicht an einer Stelle setzt, an der es nicht stehen darf.</p>
+        </div>
+        <div class="panel">
+          <h4><span class="dot"></span>Zitate und indirekte Rede</h4>
+          <p>In Zusammenfassung, Analyse und Interpretation kommen ständig wörtliche und indirekte Rede vor. Beides hat feste Kommaregeln – siehe die Karten „Wörtliche Rede“ und „Nebensatz“ (Satz mit „behauptet, …“).</p>
+        </div>
+      </div>
+      <div class="subhead">
+        <h3>Korrekturlesen in drei Schritten</h3>
+        <p>So gehst du am Ende deines Textes die Kommas durch.</p>
+      </div>
+      <div class="panel">
+        <ol class="check">
+          <li><span>Personalformen unterstreichen. Wo zwei Teilsätze aneinandergrenzen, prüfen, ob ein Komma steht (Ausnahme: <i>und</i>/<i>oder</i> zwischen Hauptsätzen).</span></li>
+          <li><span>Eingeschobene Nebensätze und Zusätze einklammern: Stehen vorn <b>und</b> hinten Kommas?</span></li>
+          <li><span>Aufzählungen, Infinitivgruppen mit <i>um/ohne/statt</i> und wörtliche Rede einzeln abklopfen.</span></li>
+        </ol>
+      </div>
+      <div class="quellen">
+        <span>Amtliche, kostenlose Quellen:</span>
+        <a href="https://www.matura.gv.at/downloads/download/Beurteilungsdokumente%20SRDP%20Unterrichtssprache" target="_blank" rel="noopener noreferrer">Beurteilungsraster SRDP (BMBWF) ↗</a>
+        <a href="https://www.rechtschreibrat.com/regeln-und-woerterverzeichnis/" target="_blank" rel="noopener noreferrer">Amtliches Regelwerk (Rat für deutsche Rechtschreibung) ↗</a>
+      </div>
+      <p class="geplant"><b>In Planung:</b> Rechtschreibung (Groß- und Kleinschreibung, getrennt/zusammen, das/dass …), Grammatik (Kasus, Konjunktiv bei indirekter Rede, Bezüge …) und eine Fehlerjagd mit Fehlerprofil.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p>Die Karten erklären die Regeln in knapper Form und ersetzen nicht das amtliche Regelwerk. Bei Sonderfällen gilt dessen Wortlaut.</p>
+      <p class="credit">Erstellt von Mag. Harald Schmidt, Lehrer am Gymnasium Sacré Coeur Pressbaum · mit Unterstützung von <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">Claude</a></p>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* =====================================================================
+   DATEN
+   Satzformat für den Komma-Setzer (s): Wörter durch Leerzeichen getrennt.
+   Ein Wort mit angehängtem "," bekommt dort ein Pflicht-Komma,
+   ein Wort mit angehängtem "^" ein freigestelltes Komma.
+   e = Erklärungen zu den Kommas in der Reihenfolge ihres Auftretens,
+   h = Erklärung, wenn kein Komma steht.
+   In Beispielen: Kommas werden automatisch hervorgehoben,
+   [[x]] markiert eine Fehlerstelle ([[fehlt]] = fehlendes Komma).
+   ===================================================================== */
+const FAELLE = [
+  {
+    id:'aufzaehlung', titel:'Aufzählung', tag:'Pflicht · vor „und“ kein Komma',
+    kurz:'Gleichartige Wörter oder Wortgruppen nebeneinander – und der Gegensatz mit „aber“, „sondern“.',
+    blick:['Komma zwischen den Gliedern, nicht vor und/oder; Komma vor aber, sondern, doch','Äpfel, Birnen und Pflaumen'],
+    regel:'Gleichrangige Wörter oder Wortgruppen werden durch Komma getrennt. Vor <i>und, oder, sowie, beziehungsweise, sowohl … als auch, entweder … oder, weder … noch</i> steht kein Komma. Vor <i>aber, sondern, doch, jedoch</i> steht dagegen immer ein Komma – auch zwischen einzelnen Wörtern.',
+    probe:'Setze „und“ zwischen die Teile. Passt es, ohne dass der Sinn kippt (oder lassen sich die Teile vertauschen), sind sie gleichrangig: Komma.',
+    beispiele:[
+      ['Im Pausenraum standen Tische, Stühle, Sofas und ein Klavier.','Komma zwischen den Gliedern, keines vor „und“.'],
+      ['Sie ist eine kluge, freundliche Lehrerin.','Die Adjektive sind gleichrangig: „klug und freundlich“.'],
+      ['Der Film war kurz, aber spannend.','Komma vor „aber“, auch zwischen einzelnen Wörtern.'],
+      ['Sie liest nicht Krimis, sondern Gedichte.','Komma vor „sondern“.']
+    ],
+    fallen:[
+      ['Sie kaufte Äpfel, Birnen[[,]] und Pflaumen.','Sie kaufte Äpfel, Birnen und Pflaumen.','Vor „und“, „oder“, „sowie“ steht in einer Aufzählung kein Komma.'],
+      ['Das war der erste[[,]] große Erfolg.','Das war der erste große Erfolg.','„erste und große“ geht nicht: Die Adjektive sind nicht gleichrangig, also kein Komma.'],
+      ['Der Film war kurz[[fehlt]] aber spannend.','Der Film war kurz, aber spannend.','Vor „aber“, „sondern“, „doch“ steht immer ein Komma.']
+    ],
+    saetze:[
+      {s:'Für den Ausflug brauchen wir Jause, Getränke und Sonnencreme.', e:['Aufzählung: Komma zwischen gleichrangigen Teilen. Vor „und“ steht keines.']},
+      {s:'Der Verfasser argumentiert sachlich, nüchtern und überzeugend.', e:['Gleichrangige Wörter: Komma, vor „und“ keines.']},
+      {s:'Sie ist eine kluge, freundliche und hilfsbereite Lehrerin.', e:['Die Adjektive sind gleichrangig („klug und freundlich“): Komma; vor „und“ keines.']},
+      {s:'Das war der erste große Erfolg der Schülerzeitung.', h:'Kein Komma: „erste und große“ geht nicht – die Adjektive sind nicht gleichrangig.'},
+      {s:'Der Film war kurz, aber spannend.', e:['Vor „aber“ steht immer ein Komma – auch zwischen einzelnen Wörtern.']},
+      {s:'Sie liest nicht Krimis, sondern Gedichte.', e:['Vor „sondern“ steht ein Komma.']},
+      {s:'Auf dem Markt gab es Obst, Gemüse, Käse, Brot und Blumen.', e:['Aufzählung: Komma nach jedem Glied außer vor „und“.']},
+      {s:'Sowohl die Lehrerin als auch die Schüler waren begeistert.', h:'Kein Komma: „sowohl … als auch“ ist ein Paar, das wie „und“ verbindet.'},
+      {s:'Er sprach über Klimawandel, Verkehr und Bildung, aber auch über das Schulbuffet.', e:['Aufzählung: Komma zwischen den Gliedern.','Vor „aber auch“ steht ein Komma (Gegensatz). Vor „und“ nicht.']},
+      {s:'Der Bericht ist sachlich, präzise, aber leider zu lang.', e:['Aufzählung: Komma zwischen den gleichrangigen Wörtern.','Vor „aber“ steht ein Komma.']}
+    ]
+  },
+  {
+    id:'satzreihe', titel:'Hauptsätze verbinden (Satzreihe)', tag:'Pflicht · vor „und/oder“ freigestellt',
+    kurz:'Zwei oder mehr gleichrangige Hauptsätze nebeneinander.',
+    blick:['Komma zwischen den Hauptsätzen; vor und/oder keines (freigestellt)','Es regnete, aber wir gingen hinaus.'],
+    regel:'Hauptsätze (Personalform an zweiter Stelle, auch allein verständlich) werden durch Komma getrennt: bei <i>aber, doch, jedoch, sondern, denn</i> und auch dann, wenn gar kein Bindewort steht (auch bei <i>deshalb, trotzdem</i>). Vor <i>und</i> und <i>oder</i> steht normalerweise kein Komma; zwischen zwei vollständigen Hauptsätzen darfst du eines setzen, wenn es der Gliederung hilft (freigestellt).',
+    probe:'Zähle die Personalformen und prüfe: Kann jeder Teil allein als Satz stehen? Dann Hauptsätze. Teilen sich die Teile ein Subjekt („Er stand auf und ging“), ist es nur ein Satz mit zwei Prädikaten.',
+    beispiele:[
+      ['Es regnete in Strömen, aber wir gingen trotzdem spazieren.','Zwei Hauptsätze mit „aber“.'],
+      ['Ich lese gern Krimis, denn sie halten mich in Spannung.','Vor „denn“ steht immer ein Komma.'],
+      ['Es war spät, wir gingen heim.','Zwei Hauptsätze ohne Bindewort: Komma.'],
+      ['Er stand früh auf und ging zum Bahnhof.','Gemeinsames Subjekt, ein Satz: kein Komma.']
+    ],
+    fallen:[
+      ['Es regnete[[fehlt]] aber wir gingen hinaus.','Es regnete, aber wir gingen hinaus.','Zwei Hauptsätze mit „aber“ brauchen ein Komma.'],
+      ['Er stand auf[[,]] und ging hinaus.','Er stand auf und ging hinaus.','Hier gibt es nur ein Subjekt (er) mit zwei Prädikaten – kein Komma vor „und“.'],
+      ['Es war spät[[fehlt]] deshalb gingen wir heim.','Es war spät, deshalb gingen wir heim.','„deshalb“ ist ein Adverb, kein Bindewort. Die zwei Hauptsätze brauchen trotzdem ein Komma.']
+    ],
+    saetze:[
+      {s:'Es regnete in Strömen, aber wir gingen trotzdem spazieren.', e:['Zwei Hauptsätze mit „aber“: Komma.']},
+      {s:'Er stand früh auf und ging zum Bahnhof.', h:'Kein Komma: ein Satz mit zwei Prädikaten und gemeinsamem Subjekt.'},
+      {s:'Die Lehrerin erklärte die Regel, wir schrieben alles mit.', e:['Zwei Hauptsätze ohne Bindewort: Komma.']},
+      {s:'Ich lese gern Krimis, denn sie halten mich in Spannung.', e:['„denn“ verbindet zwei Hauptsätze – davor steht immer ein Komma.']},
+      {s:'Der Autor kritisiert die Medien, doch er nennt keine Belege.', e:['Zwei Hauptsätze mit „doch“: Komma.']},
+      {s:'Wir fahren nach Wien^ oder wir bleiben in Salzburg.', e:['Vor „oder“ zwischen zwei vollständigen Hauptsätzen ist das Komma freigestellt: mit oder ohne ist richtig.']},
+      {s:'Es war spät, deshalb verabschiedeten wir uns.', e:['„deshalb“ ist ein Adverb, kein Bindewort: Die zwei Hauptsätze brauchen ein Komma.']},
+      {s:'Der Text ist kurz, aber er enthält viele Stilmittel.', e:['Zwei Hauptsätze mit „aber“: Komma.']},
+      {s:'Sie schloss das Buch und legte es beiseite.', h:'Kein Komma: gemeinsames Subjekt, ein Satz mit zwei Prädikaten.'},
+      {s:'Es regnete, wir blieben zu Hause und spielten Karten.', e:['Zwei Hauptsätze ohne Bindewort: Komma. Vor „und“ steht keines (gemeinsames Subjekt „wir“).']}
+    ]
+  },
+  {
+    id:'nebensatz', titel:'Nebensatz', tag:'Pflicht · eingeschoben: zwei Kommas',
+    kurz:'Teilsätze mit „dass“, „weil“, „wenn“, „obwohl“, „ob“, „als“ … und die indirekte Rede.',
+    blick:['Komma zwischen Haupt- und Nebensatz; eingeschoben: Komma vorn und hinten','Ich glaube, dass er recht hat.'],
+    regel:'Ein Nebensatz wird vom Hauptsatz durch Komma abgetrennt – egal ob er davor, danach oder mittendrin steht. Mittendrin braucht er <b>zwei</b> Kommas. Bei Konjunktionen aus mehreren Wörtern (<i>ohne dass, als ob, so dass</i>) steht das Komma vor der ganzen Konjunktion. Auch die indirekte Rede ohne „dass“ (<i>Er sagt, er sei müde.</i>) ist ein Nebensatz.',
+    probe:'Das Verb steht am Ende und der Teilsatz kann allein nicht stehen. Oder: Du kannst ihn durch ein Wort ersetzen („Ich glaube das.“).',
+    beispiele:[
+      ['Weil es stark regnete, fiel das Fest aus.','Vorangestellt: Komma am Ende des Nebensatzes.'],
+      ['Wir bleiben zu Hause, weil es regnet.','Nachgestellt: Komma davor.'],
+      ['Wir wissen, dass er, obwohl er krank war, zur Schule kam.','Eingeschobener Nebensatz: Komma vorn und hinten.'],
+      ['Je länger ich nachdenke, desto weniger verstehe ich.','Auch „je … desto“ trennt ein Komma.'],
+      ['Der Autor behauptet, die Medien seien manipulativ.','Indirekte Rede ohne „dass“: ebenfalls Komma.']
+    ],
+    fallen:[
+      ['Ich glaube[[fehlt]] dass er recht hat.','Ich glaube, dass er recht hat.','Vor „dass“ steht immer ein Komma.'],
+      ['Wir wissen, dass er, obwohl er krank war[[fehlt]] kam.','Wir wissen, dass er, obwohl er krank war, kam.','Ein eingeschobener Nebensatz endet mit einem zweiten Komma.'],
+      ['Er ist größer[[fehlt]] als ich dachte.','Er ist größer, als ich dachte.','„als ich dachte“ hat ein eigenes Verb – Nebensatz, also Komma. Bei „Er ist größer als ich.“ gibt es keines.'],
+      ['Sie hofft, dass die Prüfung fair ist[[,]] und dass sie alles schafft.','Sie hofft, dass die Prüfung fair ist und dass sie alles schafft.','Zwei gleichrangige Nebensätze, mit „und“ verbunden: kein Komma dazwischen.']
+    ],
+    tipp:'<b>Vergleich mit „als“ und „wie“:</b> Steht danach nur ein Wort oder eine Wortgruppe, gibt es kein Komma („größer als ich“). Folgt ein eigenes Verb, ist es ein Nebensatz und es braucht ein Komma („größer, als ich dachte“).',
+    saetze:[
+      {s:'Ich glaube, dass er recht hat.', e:['Vor „dass“ steht immer ein Komma.']},
+      {s:'Weil es stark regnete, fiel das Fest aus.', e:['Der vorangestellte Nebensatz endet mit einem Komma.']},
+      {s:'Wir wissen, dass er, obwohl er krank war, zur Schule kam.', e:['Komma vor dem Nebensatz „dass …“.','Der eingeschobene Nebensatz beginnt mit einem Komma …','… und endet mit einem Komma (Kommapaar).']},
+      {s:'Er ist größer als ich.', h:'Kein Komma: „als ich“ ist nur ein Vergleich ohne eigenes Verb.'},
+      {s:'Er ist größer, als ich dachte.', e:['„als ich dachte“ hat ein eigenes Verb (dachte): Nebensatz, also Komma.']},
+      {s:'Je länger ich darüber nachdenke, desto weniger verstehe ich.', e:['Der „je“-Nebensatz wird mit Komma abgetrennt.']},
+      {s:'Er verließ den Raum, ohne dass jemand es bemerkte.', e:['Das Komma steht vor der ganzen Konjunktion „ohne dass“.']},
+      {s:'Sie hofft, dass die Prüfung fair ist und dass sie alles schafft.', e:['Komma vor dem ersten Nebensatz. Zwischen den beiden mit „und“ verbundenen Nebensätzen steht keines.']},
+      {s:'Der Autor behauptet, die Medien seien manipulativ.', e:['Auch ohne „dass“ ist die indirekte Rede ein Nebensatz: Komma.']},
+      {s:'Als sie ankamen, war das Konzert schon vorbei.', e:['Der vorangestellte Nebensatz endet mit einem Komma.']},
+      {s:'Wenn man die Probe macht, findet man die Kommastellen leichter.', e:['Der vorangestellte „wenn“-Satz endet mit einem Komma.']},
+      {s:'Ich frage mich, ob das Thema für die Matura geeignet ist.', e:['Vor „ob“ steht ein Komma.']}
+    ]
+  },
+  {
+    id:'relativsatz', titel:'Relativsatz', tag:'Pflicht · eingeschoben: zwei Kommas',
+    kurz:'Nebensätze mit „der, die, das, welcher, wer, was“, die sich auf ein Bezugswort beziehen.',
+    blick:['Immer Komma; mitten im Satz vorn und hinten','Der Text, den wir lasen, ist ein Kommentar.'],
+    regel:'Ein Relativsatz ist ein Nebensatz, der ein Wort davor näher beschreibt. Er steht immer zwischen Kommas: nachgestellt mit einem Komma davor, eingeschoben mit zwei. Beginnt er mit einer Präposition (<i>in dem, mit der, von denen</i>), steht das Komma vor der ganzen Wortgruppe.',
+    probe:'Lässt sich „der/die/das“ durch „welcher/welche/welches“ ersetzen, und hat der Satz ein Bezugswort davor? Dann Relativsatz. (Das Gleiche gilt für „das“ gegenüber „dass“.)',
+    beispiele:[
+      ['Der Text, den wir gelesen haben, ist ein Kommentar.','Eingeschoben: Komma vorn und hinten.'],
+      ['Ich kenne eine Autorin, die viele Preise gewonnen hat.','Nachgestellt: Komma davor.'],
+      ['Das ist das Haus, in dem sie aufgewachsen ist.','Das Komma steht vor „in dem“.'],
+      ['Er kam zu spät, was alle ärgerte.','„was“ bezieht sich auf den ganzen vorigen Satz.']
+    ],
+    fallen:[
+      ['Der Text, den wir gelesen haben[[fehlt]] ist ein Kommentar.','Der Text, den wir gelesen haben, ist ein Kommentar.','Der eingeschobene Relativsatz braucht auch hinten ein Komma.'],
+      ['Das ist das Haus in[[,]] dem sie aufgewachsen ist.','Das ist das Haus, in dem sie aufgewachsen ist.','Das Komma steht vor der ganzen Wortgruppe „in dem“, nicht mitten darin.'],
+      ['Er kam zu spät[[fehlt]] was alle ärgerte.','Er kam zu spät, was alle ärgerte.','Auch ein Relativsatz mit „was“ wird abgetrennt.']
+    ],
+    tipp:'<b>Kein Relativsatz:</b> „Der Lehrer der Parallelklasse hat Aufsicht.“ – „der Parallelklasse“ ist ein Attribut ohne eigenes Verb, also kein Komma.',
+    saetze:[
+      {s:'Der Text, den wir gelesen haben, ist ein Kommentar.', e:['Der eingeschobene Relativsatz beginnt mit einem Komma …','… und endet mit einem Komma (Kommapaar).']},
+      {s:'Ich kenne eine Autorin, die viele Preise gewonnen hat.', e:['Nachgestellter Relativsatz: Komma davor.']},
+      {s:'Das ist das Haus, in dem sie aufgewachsen ist.', e:['Das Komma steht vor der ganzen Wortgruppe „in dem“.']},
+      {s:'Die Lehrerin, mit der wir die Matura vorbereiten, ist sehr geduldig.', e:['Komma vor „mit der“.','Der Relativsatz ist zu Ende: zweites Komma.']},
+      {s:'Er kam zu spät, was alle ärgerte.', e:['„was“ bezieht sich auf den ganzen vorigen Satz – auch das ist ein Relativsatz.']},
+      {s:'Sie nannte drei Gründe, von denen der letzte am überzeugendsten war.', e:['Komma vor „von denen“.']},
+      {s:'Das Buch, das ich dir geliehen habe, gehört meiner Schwester.', e:['Der eingeschobene Relativsatz beginnt mit einem Komma …','… und endet mit einem Komma.']},
+      {s:'Wer rastet, der rostet.', e:['Der „wer“-Satz wird vom Hauptsatz durch Komma getrennt.']},
+      {s:'Der Lehrer der Parallelklasse hat Aufsicht.', h:'Kein Komma: „der Parallelklasse“ ist ein Attribut ohne eigenes Verb, kein Relativsatz.'}
+    ]
+  },
+  {
+    id:'infinitiv', titel:'Infinitivgruppe', tag:'Pflicht oder freigestellt',
+    kurz:'„zu“ + Infinitiv mit Erweiterung: „um … zu“, „ohne … zu“, „statt … zu“ und andere.',
+    blick:['Pflicht bei um/ohne/statt/anstatt/außer/als, bei Substantiv oder Hinweiswort; sonst freigestellt','Er kam, um zu helfen.'],
+    regel:'Das Komma <b>muss</b> stehen, wenn die Infinitivgruppe mit <i>um, ohne, statt, anstatt, außer</i> oder <i>als</i> beginnt, wenn sie von einem Substantiv abhängt (<i>die Hoffnung, … zu …</i>) oder wenn ein Hinweiswort darauf verweist (<i>es, daran, darauf, dazu …</i>). In allen anderen Fällen ist das Komma <b>freigestellt</b>. Steht die Gruppe mitten im Satz, braucht sie zwei Kommas.',
+    probe:'Suche „zu“ + Infinitiv. Beginnt die Gruppe mit um/ohne/statt/anstatt/außer/als? Steht ein Substantiv oder ein Hinweiswort davor? Dann Komma. Sonst darfst du selbst entscheiden.',
+    beispiele:[
+      ['Sie lernt täglich, um die Matura zu bestehen.','Pflicht: „um … zu“.'],
+      ['Seine Hoffnung, bald gesund zu werden, erfüllte sich nicht.','Pflicht: hängt vom Substantiv „Hoffnung“ ab. Zwei Kommas.'],
+      ['Sie freut sich darauf, dich bald wiederzusehen.','Pflicht: Hinweiswort „darauf“.'],
+      ['Er versuchte, das Problem zu lösen.','Freigestellt: auch ohne Komma richtig.']
+    ],
+    fallen:[
+      ['Er kam[[fehlt]] um zu helfen.','Er kam, um zu helfen.','Bei „um … zu“ steht immer ein Komma – auch ohne Erweiterung.'],
+      ['Seine Hoffnung[[fehlt]] bald gesund zu werden[[fehlt]] erfüllte sich nicht.','Seine Hoffnung, bald gesund zu werden, erfüllte sich nicht.','Die Infinitivgruppe hängt von einem Substantiv ab und steht mitten im Satz: zwei Kommas.']
+    ],
+    tipp:'<b>Wo du frei bist,</b> hilft ein Komma, Missverständnisse zu vermeiden. Beides ist kein Fehler. Entscheide dich aber im Text einheitlich.',
+    saetze:[
+      {s:'Sie lernt täglich, um die Matura zu bestehen.', e:['Bei „um … zu“ steht immer ein Komma.']},
+      {s:'Er ging, ohne sich zu verabschieden.', e:['Bei „ohne … zu“ steht immer ein Komma.']},
+      {s:'Seine Hoffnung, bald gesund zu werden, erfüllte sich nicht.', e:['Die Infinitivgruppe hängt vom Substantiv „Hoffnung“ ab: Komma davor …','… und, weil sie mitten im Satz steht, auch danach.']},
+      {s:'Sie freut sich darauf, dich bald wiederzusehen.', e:['Das Hinweiswort „darauf“ kündigt die Infinitivgruppe an: Komma.']},
+      {s:'Ich liebe es, früh aufzustehen.', e:['Das Hinweiswort „es“ verweist auf die Infinitivgruppe: Komma.']},
+      {s:'Er versuchte^ das Problem zu lösen.', e:['Weder „um/ohne/statt“ noch Substantiv noch Hinweiswort: Das Komma ist freigestellt.']},
+      {s:'Statt zu lernen, spielte er den ganzen Nachmittag Fußball.', e:['Infinitivgruppe mit „statt“: Komma am Ende der vorangestellten Gruppe.']},
+      {s:'Wir haben heute viel zu tun.', h:'Kein Komma: „zu tun haben“ gehört fest zusammen, es ist keine Infinitivgruppe mit um/ohne/statt.'},
+      {s:'Die Gelegenheit, ihn zu treffen, ließ sie nicht aus.', e:['Die Gruppe hängt vom Substantiv „Gelegenheit“ ab: Komma davor …','… und, weil sie mitten im Satz steht, auch danach.']},
+      {s:'Sie bat mich^ ihr zu helfen.', e:['Keine der Pflichtbedingungen trifft zu: Das Komma ist freigestellt.']}
+    ]
+  },
+  {
+    id:'zusaetze', titel:'Zusätze, Anrede und Ausruf', tag:'Pflicht · eingeschoben: zwei Kommas',
+    kurz:'Appositionen, „zum Beispiel“, „und zwar“, Datum, Anrede und Ausruf.',
+    blick:['Zusatz eingeschoben: Komma vorn und hinten; nachgestellt: Komma davor','Wien, die Hauptstadt, liegt an der Donau.'],
+    regel:'Zusätze, die einen Teil des Satzes näher erklären, werden durch Komma abgetrennt: eingeschoben mit <b>zwei</b> Kommas (wie Klammern), nachgestellt mit einem. Dazu gehören Appositionen (<i>Wien, die Hauptstadt Österreichs, …</i>), Erläuterungen mit <i>zum Beispiel, das heißt, nämlich, und zwar</i> sowie Datumsangaben im Satz. Auch Anreden und Ausrufe (<i>ach, oh</i>) werden abgetrennt.',
+    probe:'Lässt sich der Zusatz herausnehmen, ohne dass der Satz grammatisch kaputtgeht? Dann steht er zwischen Kommas.',
+    beispiele:[
+      ['Wien, die Hauptstadt Österreichs, liegt an der Donau.','Apposition: zwei Kommas.'],
+      ['Viele Tiere, zum Beispiel Igel, halten Winterschlaf.','Zusatz mit „zum Beispiel“: zwei Kommas.'],
+      ['Am Dienstag, dem 3. November, beginnt die Schularbeit.','Datum im Satz: zwei Kommas.'],
+      ['Wir treffen uns am Wochenende, und zwar am Samstag.','Nachgestellter Zusatz: ein Komma davor.'],
+      ['Herr Müller, kommen Sie bitte kurz zu mir.','Anrede wird abgetrennt.']
+    ],
+    fallen:[
+      ['Wien, die Hauptstadt Österreichs[[fehlt]] liegt an der Donau.','Wien, die Hauptstadt Österreichs, liegt an der Donau.','Ein eingeschobener Zusatz braucht zwei Kommas – wie Klammern, die auf- und zugehen.'],
+      ['Ach[[fehlt]] das habe ich vergessen.','Ach, das habe ich vergessen.','Ausrufe wie „ach“ und „oh“ werden vom Satz abgetrennt.']
+    ],
+    saetze:[
+      {s:'Wien, die Hauptstadt Österreichs, liegt an der Donau.', e:['Die Apposition beginnt mit einem Komma …','… und endet mit einem Komma.']},
+      {s:'Viele Tiere, zum Beispiel Igel, halten Winterschlaf.', e:['Der Zusatz „zum Beispiel Igel“ beginnt mit einem Komma …','… und endet mit einem Komma.']},
+      {s:'Am Dienstag, dem 3. November, beginnt die Schularbeit.', e:['Die Datumsangabe ist ein Zusatz: Komma davor …','… und danach.']},
+      {s:'Ach, das habe ich vergessen.', e:['Der Ausruf „ach“ wird abgetrennt.']},
+      {s:'Herr Müller, kommen Sie bitte kurz zu mir.', e:['Die Anrede wird abgetrennt.']},
+      {s:'Wir treffen uns am Wochenende, und zwar am Samstag.', e:['Vor „und zwar“ steht ein Komma (nachgestellter Zusatz).']},
+      {s:'Mein Bruder, ein begeisterter Läufer, trainiert jeden Tag.', e:['Die Apposition beginnt mit einem Komma …','… und endet mit einem Komma.']}
+    ]
+  },
+  {
+    id:'woertlich', titel:'Wörtliche Rede und Zitate', tag:'Pflicht',
+    kurz:'Begleitsatz vor, nach oder mitten in der wörtlichen Rede.',
+    blick:['Begleitsatz davor: Doppelpunkt; danach: Komma; mitten: zwei Kommas','„Ich komme“, sagte sie.'],
+    regel:'Steht der Begleitsatz <b>vor</b> der wörtlichen Rede, folgt ein Doppelpunkt. Steht er <b>danach</b>, entfällt der Schlusspunkt der Rede und nach dem schließenden Anführungszeichen steht ein Komma – auch wenn in der Rede ein Frage- oder Ausrufezeichen steht. Steht er <b>mitten in der Rede</b>, wird er von zwei Kommas eingeschlossen.',
+    probe:'Wo steht der Begleitsatz („sagte sie“)? Davor: Doppelpunkt. Danach: Komma. In der Mitte: zwei Kommas.',
+    beispiele:[
+      ['Sie sagte: „Ich komme morgen.“','Begleitsatz davor: Doppelpunkt.'],
+      ['„Ich komme morgen“, sagte sie.','Begleitsatz danach: kein Punkt in der Rede, Komma nach dem Anführungszeichen.'],
+      ['„Kommst du morgen?“, fragte sie.','Das Fragezeichen bleibt, das Komma folgt trotzdem.'],
+      ['„Ich komme“, sagte sie, „aber später.“','Begleitsatz in der Mitte: zwei Kommas.']
+    ],
+    fallen:[
+      ['„Ich komme morgen[[.]]“[[fehlt]] sagte sie.','„Ich komme morgen“, sagte sie.','Folgt der Begleitsatz, entfällt der Punkt in der Rede und ein Komma steht nach dem Anführungszeichen.'],
+      ['„Kommst du morgen?“[[fehlt]] fragte sie.','„Kommst du morgen?“, fragte sie.','Frage- und Ausrufezeichen bleiben – das Komma kommt trotzdem dazu.'],
+      ['Sie sagte[[,]] „Ich komme morgen.“','Sie sagte: „Ich komme morgen.“','Vor der wörtlichen Rede steht ein Doppelpunkt.']
+    ],
+    tipp:'<b>Kurze Zitate im Satz</b> (zum Beispiel ein einzelnes Wort in Anführungszeichen) werden wie normale Satzteile behandelt: Es gilt die Zeichensetzung des Satzes.',
+    saetze:[
+      {s:'„Ich komme morgen“, sagte sie.', e:['Nach dem schließenden Anführungszeichen steht bei nachgestelltem Begleitsatz ein Komma; der Punkt in der Rede entfällt.']},
+      {s:'„Kommst du morgen?“, fragte sie.', e:['Das Fragezeichen bleibt – und trotzdem steht danach ein Komma.']},
+      {s:'„Ich komme“, sagte sie, „aber später.“', e:['Komma nach dem ersten Teil der Rede.','Komma nach dem eingeschobenen Begleitsatz.']},
+      {s:'Sie sagte: „Ich komme morgen.“', h:'Kein Komma: Vor der Rede steht ein Doppelpunkt.'},
+      {s:'„Komm sofort her!“, rief die Lehrerin.', e:['Das Ausrufezeichen bleibt – danach folgt trotzdem ein Komma.']},
+      {s:'Der Autor nennt das Vorgehen „unverantwortlich“ und fordert Konsequenzen.', h:'Kein Komma: Das kurze Zitat ist in den Satz eingebaut; es gilt die Zeichensetzung des Satzes (gemeinsames Subjekt, ein Satz).'}
+    ]
+  }
+];
+
+/* ---------------- Komma-Entscheider ---------------- */
+const ENT = {
+  start:{f:'Worum geht es an der Stelle, an der du unsicher bist?', o:[
+    ['Im Satz kommen mehrere Verben mit eigener Personalform vor','satz'],
+    ['Es kommt „zu“ + Infinitiv vor („um … zu“, „… ihn zu treffen“)','inf'],
+    ['Gleichartige Wörter stehen nebeneinander, oder es folgt ein Gegensatz („aber“, „sondern“)','aufz'],
+    ['Ein Zusatz, eine Anrede oder ein Ausruf unterbricht den Satz','zus'],
+    ['Es geht um wörtliche Rede','wr']
+  ]},
+  rest:{f:'Dann liegt keine Teilsatz-Grenze vor. Worum geht es sonst?', o:[
+    ['Es kommt „zu“ + Infinitiv vor','inf'],
+    ['Gleichartige Wörter stehen nebeneinander, oder es folgt ein Gegensatz („aber“, „sondern“)','aufz'],
+    ['Ein Zusatz, eine Anrede oder ein Ausruf unterbricht den Satz','zus'],
+    ['Es geht um wörtliche Rede','wr'],
+    ['Nichts davon','kein']
+  ]},
+  satz:{f:'Zähle die Personalformen: Hat der Satzteil links der Stelle und der Satzteil rechts jeweils ein eigenes gebeugtes Verb?',
+    hilfe:'Beispiel: „Sie hofft, dass die Prüfung fair ist.“ – hofft und ist sind Personalformen, also zwei Teilsätze. Das Komma trennt sie.',
+    o:[['Ja, links und rechts steht je ein eigener Teilsatz','satz2'],['Nein, es ist nur ein Teilsatz','rest']]},
+  satz2:{f:'Ist einer der beiden Teilsätze ein Nebensatz?',
+    hilfe:'Erkennbar an einem Einleitewort (dass, weil, wenn, obwohl, ob, als, nachdem, ohne dass …) oder Relativpronomen (der, die, das, welcher, wer, was …) und dem Verb am Ende – oder an einer indirekten Rede ohne „dass“ („Er sagt, er sei müde.“).',
+    o:[['Ja, einer ist ein Nebensatz','satz3'],['Nein, beide sind Hauptsätze (Verb an zweiter Stelle)','satz4']]},
+  satz3:{f:'Verbindet an der Stelle nur „und“ oder „oder“ zwei gleichrangige Nebensätze (zum Beispiel „…, dass A ist und dass B …“)?',
+    o:[['Ja','R_nebenUnd'],['Nein','R_neben']]},
+  satz4:{f:'Steht an der Stelle „und“ oder „oder“ (auch sowie, beziehungsweise, entweder … oder, weder … noch)?',
+    o:[['Ja','R_reiheUnd'],['Nein, es steht „aber“, „doch“, „sondern“, „denn“, „deshalb“ oder gar kein Bindewort','R_reihe']]},
+  inf:{f:'Beginnt die Infinitivgruppe mit um, ohne, statt, anstatt, außer oder als – oder hängt sie von einem Substantiv ab oder verweist ein Hinweiswort (es, daran, darauf, dazu …) darauf?',
+    hilfe:'Beispiele: „…, um zu helfen“ · „Seine Hoffnung, bald gesund zu werden“ · „Sie freut sich darauf, …“',
+    o:[['Ja','R_infPflicht'],['Nein','R_infFrei']]},
+  aufz:{f:'Wie sind die Teile verbunden?', o:[
+    ['Nur aufgezählt, ohne Bindewort – oder mit „aber“, „sondern“, „doch“, „jedoch“','R_aufzKomma'],
+    ['Mit „und“, „oder“, „sowie“, „beziehungsweise“, „sowohl … als auch“, „weder … noch“','R_aufzKein'],
+    ['Zwei Adjektive stehen vor einem Nomen','adj']
+  ]},
+  adj:{f:'Lässt sich „und“ zwischen die Adjektive setzen, ohne dass der Sinn kippt (oder lassen sie sich vertauschen)?',
+    hilfe:'Probe: „eine kluge, freundliche Lehrerin“ → „klug und freundlich“ ✓. „Der erste große Erfolg“ → „erste und große“ ✗.',
+    o:[['Ja','R_aufzKomma'],['Nein','R_adjKein']]},
+  zus:{f:'Was unterbricht den Satz?', o:[
+    ['Ein Nachtrag oder eine Erklärung (Apposition, „zum Beispiel“, „das heißt“, „und zwar“, Datum)','R_zus'],
+    ['Eine Anrede oder ein Ausruf („Herr Müller, …“, „Ach, …“)','R_anrede']
+  ]},
+  wr:{f:'Wo steht der Begleitsatz („sagte sie“)?', o:[
+    ['Vor der wörtlichen Rede','R_wrVor'],
+    ['Nach der wörtlichen Rede','R_wrNach'],
+    ['Mitten in der wörtlichen Rede','R_wrMitte']
+  ]},
+  kein:{r:'kein', titel:'Wahrscheinlich kein Komma', text:'Ohne Teilsatz-Grenze, Aufzählung, Zusatz, Infinitivgruppe oder wörtliche Rede steht in der Regel kein Komma. Zwischen Subjekt und Prädikat steht nie eines – außer ein eingeschobener Teil trennt sie (dann zwei).', fall:[]},
+  R_nebenUnd:{r:'kein', titel:'Kein Komma', text:'Zwischen zwei gleichrangigen Nebensätzen, die mit „und“ oder „oder“ verbunden sind, steht kein Komma. Das Komma steht nur vor dem ersten Nebensatz.', ex:'Sie hofft, dass die Prüfung fair ist und dass sie alles schafft.', fall:['nebensatz']},
+  R_neben:{r:'pflicht', titel:'Komma setzen', text:'Nebensätze werden durch Komma abgetrennt. Steht der Nebensatz mitten im Satz, braucht er vorn und hinten ein Komma (Kommapaar).', ex:'Wir wissen, dass er, obwohl er krank war, kam.', fall:['nebensatz','relativsatz']},
+  R_reiheUnd:{r:'frei', titel:'Kein Komma nötig – freigestellt', text:'Vor „und“ und „oder“ steht normalerweise kein Komma. Zwischen zwei vollständigen Hauptsätzen darfst du eines setzen, wenn es der Gliederung hilft. Teilen sich die Teile ein Subjekt („Er stand auf und ging“), steht keines.', ex:'Wir fahren nach Wien oder wir bleiben in Salzburg.', fall:['satzreihe']},
+  R_reihe:{r:'pflicht', titel:'Komma setzen', text:'Zwischen Hauptsätzen steht ein Komma – bei „aber“, „doch“, „jedoch“, „sondern“, „denn“ und auch dann, wenn gar kein Bindewort da ist (auch bei „deshalb“, „trotzdem“).', ex:'Es war spät, deshalb verabschiedeten wir uns.', fall:['satzreihe']},
+  R_infPflicht:{r:'pflicht', titel:'Komma setzen', text:'Bei um/ohne/statt/anstatt/außer/als, bei Abhängigkeit von einem Substantiv und bei einem Hinweiswort muss das Komma stehen. Steht die Gruppe mitten im Satz, braucht sie zwei Kommas.', ex:'Seine Hoffnung, bald gesund zu werden, erfüllte sich nicht.', fall:['infinitiv']},
+  R_infFrei:{r:'frei', titel:'Komma freigestellt', text:'In allen anderen Fällen darfst du entscheiden. Mit und ohne Komma ist richtig – setze es, wenn es Missverständnisse vermeidet.', ex:'Er versuchte das Problem zu lösen.', fall:['infinitiv']},
+  R_aufzKomma:{r:'pflicht', titel:'Komma setzen', text:'Gleichrangige Teile werden durch Komma getrennt, ebenso steht vor „aber“, „sondern“, „doch“, „jedoch“ immer ein Komma.', ex:'Der Film war kurz, aber spannend.', fall:['aufzaehlung']},
+  R_aufzKein:{r:'kein', titel:'Kein Komma', text:'Vor „und“, „oder“, „sowie“, „beziehungsweise“, „sowohl … als auch“, „weder … noch“ steht in einer Aufzählung kein Komma.', ex:'Sie kaufte Äpfel, Birnen und Pflaumen.', fall:['aufzaehlung']},
+  R_adjKein:{r:'kein', titel:'Kein Komma', text:'Die Adjektive sind nicht gleichrangig: Das zweite gehört enger zum Nomen. Dann steht kein Komma.', ex:'Das war der erste große Erfolg.', fall:['aufzaehlung']},
+  R_zus:{r:'pflicht', titel:'Komma setzen', text:'Zusätze werden abgetrennt: nachgestellt mit einem Komma davor, eingeschoben mit zwei Kommas (wie Klammern).', ex:'Wien, die Hauptstadt Österreichs, liegt an der Donau.', fall:['zusaetze']},
+  R_anrede:{r:'pflicht', titel:'Komma setzen', text:'Anrede und Ausruf werden vom übrigen Satz abgetrennt.', ex:'Herr Müller, kommen Sie bitte kurz zu mir.', fall:['zusaetze']},
+  R_wrVor:{r:'kein', titel:'Doppelpunkt statt Komma', text:'Steht der Begleitsatz vor der wörtlichen Rede, folgt ein Doppelpunkt.', ex:'Sie sagte: „Ich komme morgen.“', fall:['woertlich']},
+  R_wrNach:{r:'pflicht', titel:'Komma nach dem Anführungszeichen', text:'Der Punkt in der Rede entfällt, nach dem schließenden Anführungszeichen steht ein Komma – auch nach Frage- und Ausrufezeichen.', ex:'„Kommst du morgen?“, fragte sie.', fall:['woertlich']},
+  R_wrMitte:{r:'pflicht', titel:'Zwei Kommas', text:'Ein Begleitsatz mitten in der wörtlichen Rede wird von zwei Kommas eingeschlossen.', ex:'„Ich komme“, sagte sie, „aber später.“', fall:['woertlich']}
+};
+const RTAG = {pflicht:'Komma setzen', kein:'Kein Komma', frei:'Freigestellt'};
+
+/* =====================================================================
+   HILFSFUNKTIONEN
+   ===================================================================== */
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function markup(s){
+  return s.split(/(\[\[.*?\]\])/).map(p => {
+    const m = p.match(/^\[\[(.*)\]\]$/);
+    if (m) return `<span class="err">${m[1]==='fehlt' ? 'fehlt' : esc(m[1])}</span>`;
+    return esc(p).replace(/,/g, '<span class="k">,</span>');
+  }).join('');
+}
+function faelleById(id){ return FAELLE.find(f => f.id === id); }
+function shuffle(a){
+  a = a.slice();
+  for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function parseSatz(def){
+  const toks = def.s.split(' ');
+  const words = [], mark = [];
+  toks.forEach((t,i) => {
+    let m = 0;
+    if (t.endsWith(',')){ m=1; t=t.slice(0,-1); }
+    else if (t.endsWith('^')){ m=2; t=t.slice(0,-1); }
+    words.push(t);
+    mark.push(i < toks.length-1 ? m : 0);
+  });
+  return {words, mark, e:def.e||[], h:def.h||''};
+}
+
+/* Fortschritt (nur lokal im Browser) */
+const STORE = 'srk.v1';
+function loadProg(){ try { return JSON.parse(localStorage.getItem(STORE)) || {solved:{}}; } catch(e){ return {solved:{}}; } }
+function saveProg(p){ try { localStorage.setItem(STORE, JSON.stringify(p)); } catch(e){} }
+let prog = loadProg();
+if (!prog.solved) prog.solved = {};
+
+function updateStand(){
+  let gesamt = 0, geloest = 0;
+  FAELLE.forEach(f => {
+    const n = f.saetze.length;
+    const g = f.saetze.filter((_,i) => prog.solved[f.id+':'+i]).length;
+    gesamt += n; geloest += g;
+    const el = document.querySelector(`[data-stand="${f.id}"]`);
+    if (el){ el.textContent = `${g}/${n} gelöst`; el.classList.toggle('voll', g===n); }
+  });
+  const el = $('#standGesamt');
+  if (el) el.textContent = `Dein Stand: ${geloest} von ${gesamt} Sätzen fehlerfrei gelöst.`;
+}
+
+/* =====================================================================
+   KOMMA-SETZER
+   ===================================================================== */
+function mountSetzer(root, items, opts={}){
+  let idx = 0, user = [], done = false, perfekt = 0, beendet = false;
+
+  function reset(){ user = new Array(items[idx].p.words.length).fill(false); done = false; }
+  reset();
+
+  function commaSpan(p, i){
+    const u = user[i], m = p.mark[i];
+    if (!done) return u ? '<span class="c on">,</span>' : '';
+    if (m===1 && u)  return '<span class="c ok">,</span>';
+    if (m===1 && !u) return '<span class="c miss" title="Hier fehlt ein Komma">,</span>';
+    if (m===0 && u)  return '<span class="c extra" title="Hier steht kein Komma">,</span>';
+    if (m===2 && u)  return '<span class="c frei">,</span>';
+    return '';
+  }
+
+  function render(){
+    if (beendet){
+      root.innerHTML = `<div class="sz"><div class="sz-end"><div class="big">${perfekt} von ${items.length}</div><p>Sätze ohne Fehler beim ersten Versuch.</p><div class="sz-actions" style="justify-content:center;margin-top:14px"><button type="button" class="btn" data-act="again">Noch einmal</button></div></div></div>`;
+      return;
+    }
+    const it = items[idx], p = it.p, n = p.words.length;
+    let h = `<div class="sz"><div class="sz-top"><span>Satz ${idx+1} von ${items.length}</span><span class="sz-fall">${esc(it.label||'')}</span></div>`;
+    h += `<p class="sz-hint">Tippe auf ein Wort, nach dem ein Komma stehen soll. Noch einmal tippen nimmt es wieder weg.</p>`;
+    h += `<div class="sz-satz">`;
+    for (let i=0;i<n;i++){
+      if (i < n-1 && !done) h += `<button type="button" class="w" data-i="${i}" aria-pressed="${user[i]}" aria-label="Komma nach „${esc(p.words[i])}“ setzen oder entfernen">${esc(p.words[i])}</button>`;
+      else h += `<span class="w static">${esc(p.words[i])}</span>`;
+      if (i < n-1) h += commaSpan(p, i);
+      h += ' ';
+    }
+    h += `</div><div class="sz-actions">`;
+    if (!done) h += `<button type="button" class="btn" data-act="check">Prüfen</button><button type="button" class="btn sec" data-act="clear">Zurücksetzen</button>`;
+    else h += `<button type="button" class="btn" data-act="next">${idx < items.length-1 ? 'Weiter' : 'Ergebnis'}</button><button type="button" class="btn sec" data-act="retry">Diesen Satz noch einmal</button>`;
+    h += `</div><div class="sz-out" aria-live="polite">${done ? outHtml(it) : ''}</div></div>`;
+    root.innerHTML = h;
+  }
+
+  function outHtml(it){
+    const p = it.p, n = p.words.length;
+    let miss = 0, extra = 0, k = 0, li = '';
+    for (let i=0;i<n-1;i++){
+      const u = user[i], m = p.mark[i];
+      if (m !== 0){
+        if (m===1 && !u) miss++;
+        const ex = p.e[k] ?? p.e[p.e.length-1] ?? '';
+        k++;
+        li += `<li class="${m===2?'f':''}"><b>Nach „${esc(p.words[i])}“ – ${m===1?'Komma (Pflicht)':'Komma freigestellt'}:</b> ${esc(ex)}</li>`;
+      } else if (u){
+        extra++;
+        li += `<li class="x"><b>Nach „${esc(p.words[i])}“ – hier steht kein Komma.</b></li>`;
+      }
+    }
+    const ok = miss===0 && extra===0;
+    let h = ok ? `<span class="sz-status ok">Richtig!</span>` : `<span class="sz-status nok">Nicht ganz${miss?` – ${miss} fehlend`:''}${extra?` – ${extra} zu viel`:''}</span>`;
+    h += `<p class="sz-legend">Grün = richtig gesetzt · rot gestrichelt = fehlt · rot durchgestrichen = zu viel · gelb = freigestellt</p>`;
+    if (li) h += `<ul class="sz-expl">${li}</ul>`;
+    if (p.h) h += `<ul class="sz-expl"><li><b>Kein Komma:</b> ${esc(p.h.replace(/^Kein Komma:\s*/,''))}</li></ul>`;
+    return h;
+  }
+
+  function check(){
+    done = true;
+    const it = items[idx], p = it.p, n = p.words.length;
+    let ok = true;
+    for (let i=0;i<n-1;i++){
+      if ((p.mark[i]===1 && !user[i]) || (p.mark[i]===0 && user[i])) ok = false;
+    }
+    if (ok){
+      if (!it.versucht) perfekt++;
+      prog.solved[it.id] = 1; saveProg(prog); updateStand();
+    }
+    it.versucht = true;
+    render();
+  }
+
+  root.addEventListener('click', ev => {
+    const w = ev.target.closest('button.w');
+    if (w && !done){ const i = +w.dataset.i; user[i] = !user[i]; render(); const nb = root.querySelector(`button.w[data-i="${i}"]`); if (nb) nb.focus(); return; }
+    const b = ev.target.closest('button[data-act]');
+    if (!b) return;
+    const a = b.dataset.act;
+    if (a==='check') check();
+    else if (a==='clear'){ reset(); render(); }
+    else if (a==='retry'){ reset(); render(); }
+    else if (a==='next'){ if (idx < items.length-1){ idx++; reset(); render(); } else { beendet = true; render(); } }
+    else if (a==='again'){ if (opts.again) opts.again(); else { idx=0; perfekt=0; beendet=false; items.forEach(i => i.versucht=false); reset(); render(); } }
+  });
+
+  render();
+}
+
+function itemsOf(f){
+  return f.saetze.map((def,i) => ({id:f.id+':'+i, label:f.titel, p:parseSatz(def)}));
+}
+
+/* =====================================================================
+   SEITE AUFBAUEN
+   ===================================================================== */
+function buildFacts(){
+  const n = FAELLE.reduce((s,f) => s + f.saetze.length, 0);
+  $('#facts').innerHTML =
+    `<div class="fact"><span class="n">${FAELLE.length}</span><span class="d">Kommafälle mit Regel, Probe und typischen Fehlern</span></div>` +
+    `<div class="fact"><span class="n">${n}</span><span class="d">Übungssätze zum Kommasetzen – mit Begründung zu jedem Komma</span></div>` +
+    `<div class="fact"><span class="n">3</span><span class="d">Schritte, die ohne Bauchgefühl auskommen: Personalformen, Grenzen, Rest</span></div>`;
+}
+
+function buildBlick(){
+  $('#blickTab').innerHTML =
+    '<thead><tr><th>Fall</th><th>Komma?</th><th>Beispiel</th></tr></thead><tbody>' +
+    FAELLE.map(f => `<tr><td><a href="#f-${f.id}" data-open="${f.id}">${esc(f.titel)}</a></td><td>${esc(f.blick[0])}</td><td>${markup(f.blick[1])}</td></tr>`).join('') +
+    '</tbody>';
+}
+
+function buildFaelle(){
+  $('#flist').innerHTML = FAELLE.map(f => `
+    <details class="fall" id="f-${f.id}">
+      <summary>
+        <div class="f-head"><span class="f-tag">${esc(f.tag)}</span><h3>${esc(f.titel)}</h3><p class="f-kurz">${esc(f.kurz)}</p></div>
+        <div class="f-side"><span class="stand" data-stand="${f.id}"></span><span class="chev" aria-hidden="true">+</span></div>
+      </summary>
+      <div class="f-body">
+        <div class="f-grid">
+          <div class="panel"><h4><span class="dot"></span>Regel</h4><p>${f.regel}</p></div>
+          <div class="panel"><h4><span class="dot"></span>Probe</h4><p>${f.probe}</p></div>
+        </div>
+        <div class="panel"><h4><span class="dot"></span>Beispiele</h4>
+          <ul class="beispiele">${f.beispiele.map(b => `<li>${markup(b[0])}<small>${esc(b[1])}</small></li>`).join('')}</ul>
+        </div>
+        <div class="panel problem-panel"><h4><span class="dot"></span>Typische Fehler</h4>
+          <ul class="fehler">${f.fallen.map(x => `<li>
+            <div class="row"><span class="lab f">falsch</span><span>${markup(x[0])}</span></div>
+            <div class="row"><span class="lab r">richtig</span><span>${markup(x[1])}</span></div>
+            <div class="warum">${esc(x[2])}</div></li>`).join('')}</ul>
+        </div>
+        ${f.tipp ? `<div class="tipp">${f.tipp}</div>` : ''}
+        <div class="panel"><h4><span class="dot"></span>Üben: Kommas setzen</h4><div data-sz="${f.id}"></div></div>
+      </div>
+    </details>`).join('');
+  FAELLE.forEach(f => mountSetzer(document.querySelector(`[data-sz="${f.id}"]`), itemsOf(f)));
+}
+
+/* Mischtraining */
+const mixSel = new Set(FAELLE.map(f => f.id));
+function buildMix(){
+  const box = $('#mixChips');
+  box.innerHTML = FAELLE.map(f => `<button type="button" class="chipbtn" data-id="${f.id}" aria-pressed="true">${esc(f.titel)}</button>`).join('');
+  box.addEventListener('click', ev => {
+    const b = ev.target.closest('.chipbtn'); if (!b) return;
+    const id = b.dataset.id;
+    if (mixSel.has(id)) mixSel.delete(id); else mixSel.add(id);
+    b.setAttribute('aria-pressed', mixSel.has(id));
+  });
+  $('#mixStart').addEventListener('click', startMix);
+  $('#resetProg').addEventListener('click', () => {
+    if (confirm('Den gesamten Fortschritt in diesem Browser zurücksetzen?')){ prog = {solved:{}}; saveProg(prog); updateStand(); }
+  });
+}
+function startMix(){
+  const n = +$('#mixN').value, bevor = $('#mixNew').checked;
+  let pool = [];
+  FAELLE.filter(f => mixSel.has(f.id)).forEach(f => itemsOf(f).forEach(it => pool.push(it)));
+  const run = $('#mixRun');
+  if (!pool.length){ run.innerHTML = '<p class="sz-hint">Wähle mindestens einen Kommafall aus.</p>'; return; }
+  pool = shuffle(pool);
+  if (bevor) pool.sort((a,b) => (prog.solved[a.id]?1:0) - (prog.solved[b.id]?1:0));
+  const items = shuffle(pool.slice(0, n));
+  const fresh = document.createElement('div');
+  run.innerHTML = ''; run.appendChild(fresh);
+  mountSetzer(fresh, items, {again: startMix});
+  run.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* Entscheider */
+const entState = {cur:'start', hist:[]};
+function renderEnt(){
+  const box = $('#ent'), node = ENT[entState.cur];
+  let h = `<div class="ent-trail">${entState.hist.map(x => `<span>${esc(x.label)}</span>`).join('')}</div>`;
+  if (node.r){
+    h += `<div class="ent-res ${node.r}"><span class="res-tag">${RTAG[node.r]}</span><h3>${esc(node.titel)}</h3><p>${esc(node.text)}</p>`;
+    if (node.ex) h += `<p class="ex">${markup(node.ex)}</p>`;
+    if (node.fall.length) h += `<div class="ent-links">${node.fall.map(id => `<button type="button" class="linkbtn" data-open="${id}">Zur Karte „${esc(faelleById(id).titel)}“</button>`).join('')}</div>`;
+    h += `</div>`;
+  } else {
+    h += `<div class="ent-q">${esc(node.f)}</div>`;
+    if (node.hilfe) h += `<div class="ent-hilfe">${esc(node.hilfe)}</div>`;
+    h += `<div class="ent-opts">${node.o.map((o,i) => `<button type="button" class="ent-opt" data-i="${i}">${esc(o[0])}</button>`).join('')}</div>`;
+  }
+  h += `<div class="ent-nav">${entState.hist.length ? '<button type="button" class="btn sec" data-ent="back">Zurück</button>' : ''}${entState.hist.length ? '<button type="button" class="btn sec" data-ent="restart">Neu beginnen</button>' : ''}</div>`;
+  box.innerHTML = h;
+}
+function buildEnt(){
+  $('#ent').addEventListener('click', ev => {
+    const o = ev.target.closest('.ent-opt');
+    if (o){ const node = ENT[entState.cur], c = node.o[+o.dataset.i]; entState.hist.push({id:entState.cur, label:c[0].length>46 ? c[0].slice(0,44)+'…' : c[0]}); entState.cur = c[1]; renderEnt(); return; }
+    const a = ev.target.closest('[data-ent]');
+    if (a){
+      if (a.dataset.ent==='back'){ const x = entState.hist.pop(); if (x) entState.cur = x.id; }
+      else { entState.hist = []; entState.cur = 'start'; }
+      renderEnt();
+    }
+  });
+  renderEnt();
+}
+
+function openFall(id){
+  const d = document.getElementById('f-'+id);
+  if (!d) return;
+  d.open = true;
+  d.scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('[data-open]');
+  if (!b) return;
+  ev.preventDefault();
+  openFall(b.dataset.open);
+});
+
+buildFacts();
+buildBlick();
+buildFaelle();
+buildMix();
+buildEnt();
+updateStand();
+</script>
+</body>
+</html>
