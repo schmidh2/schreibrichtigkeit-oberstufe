@@ -87,6 +87,10 @@
   nav.chips a:hover{ color:var(--accent); border-color:var(--accent); }
   @media (max-width:640px){ .logotype{ font-size:1.1rem; } .site-bar{ padding:12px 16px; gap:12px; } .wrap{ padding:0 16px; } }
 
+  .hinweis{ background:var(--warn-soft); border-bottom:1px solid var(--warn); color:var(--ink); font-size:.88rem; line-height:1.5; }
+  .hinweis .wrap{ padding-top:9px; padding-bottom:9px; }
+  .hinweis b{ color:var(--warn); }
+
   /* ---------- Hero ---------- */
   .hero{ padding:56px 0 40px; border-bottom:1px solid var(--line); }
   .hero-grid{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:48px; align-items:end; }
@@ -295,6 +299,10 @@
 </header>
 
 <main>
+  <div class="hinweis" role="note">
+    <div class="wrap"><b>Prototyp:</b> Regeln, Beispiele und Übungssätze werden noch fachlich geprüft. Im Zweifel gilt das amtliche Regelwerk.</div>
+  </div>
+
   <section class="hero">
     <div class="wrap">
       <div class="hero-grid">
