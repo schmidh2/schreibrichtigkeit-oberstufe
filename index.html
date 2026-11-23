@@ -278,6 +278,57 @@
   .geplant{ margin-top:22px; font-size:.9rem; color:var(--ink-soft); }
   .geplant b{ color:var(--ink); }
 
+
+  /* ---------- Arbeitsblätter: Druckvorschau ---------- */
+  #vorschau{ position:fixed; inset:0; z-index:100; background:#5b6068; overflow:auto; display:none; }
+  #vorschau.on{ display:block; }
+  body.v-offen{ overflow:hidden; }
+  .v-bar{ position:sticky; top:0; z-index:2; display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; padding:10px 18px; background:#1E2530; color:#E9E6DC; font-size:.88rem; }
+  .v-bar .v-titel{ font-family:var(--font-mono); font-size:.72rem; letter-spacing:.07em; text-transform:uppercase; }
+  .v-bar .v-hint{ flex:1; min-width:200px; color:#B8BFCA; font-size:.82rem; }
+  .v-bar .btn.sec{ color:#E9E6DC; border-color:#4a5262; }
+  .v-bar .btn.sec:hover{ background:#2b3342; border-color:#8FB0DE; }
+  .papier{
+    background:#fff; color:#15181d; max-width:210mm; margin:20px auto 40px; padding:16mm 16mm 14mm;
+    box-shadow:0 6px 30px rgba(0,0,0,.35);
+    font-family:var(--font-body); font-size:11pt; line-height:1.45; overflow-wrap:break-word;
+  }
+  @media (max-width:640px){ .papier{ margin:0; padding:14px 14px 24px; box-shadow:none; } .v-bar{ padding:10px 14px; } }
+  .papier h1{ font-family:var(--font-display); font-size:20pt; font-weight:600; margin:6px 0 4px; color:#15181d; }
+  .papier h2{ font-family:var(--font-display); font-size:12.5pt; font-weight:600; margin:16px 0 4px; color:#15181d; break-after:avoid; }
+  .papier p{ margin:0; }
+  .papier i, .papier b{ color:inherit; }
+  .b-top{ display:flex; justify-content:space-between; gap:12px; font-family:var(--font-mono); font-size:8pt; letter-spacing:.06em; text-transform:uppercase; color:#555; border-bottom:1px solid #999; padding-bottom:4px; }
+  .b-sub{ font-size:10pt; color:#444; margin-bottom:6px; }
+  .b-felder{ display:flex; gap:18px; margin:12px 0 14px; font-size:10pt; }
+  .b-felder span{ flex:1; border-bottom:1px solid #444; padding-bottom:12px; }
+  .b-felder span:first-child{ flex:2; }
+  .b-merke{ border:1.2px solid #555; border-radius:4px; padding:8px 11px; font-size:10pt; line-height:1.45; }
+  .b-merke p + p{ margin-top:5px; }
+  .b-hint{ font-size:9.5pt; color:#444; font-style:italic; }
+  .papier ol.b-saetze{ list-style:decimal; padding-left:34px; margin:6px 0; }
+  .papier ol.b-saetze li{ line-height:2.5; word-spacing:.3em; padding-left:4px; font-size:11.5pt; break-inside:avoid; }
+  .papier ol.b-saetze.loes li{ line-height:1.5; word-spacing:normal; margin-bottom:7px; }
+  .papier ol.b-saetze.b-fehler li{ line-height:1.5; word-spacing:normal; margin-bottom:6px; }
+  .b-saetze small{ display:block; color:#444; font-size:8.5pt; line-height:1.35; word-spacing:normal; }
+  .b-falsch{ color:#555; }
+  .b-fall{ font-family:var(--font-mono); font-size:7.5pt; color:#666; letter-spacing:.04em; text-transform:uppercase; margin-right:6px; }
+  .b-aufg{ break-inside:avoid; }
+  .zeile{ border-bottom:1px solid #777; height:22px; margin-top:4px; }
+  .papier .kk{ font-weight:800; font-size:1.25em; color:#b3261e; }
+  .papier .kf{ color:#6b5800; font-size:.9em; }
+  .b-fuss{ margin-top:20px; padding-top:6px; border-top:1px solid #999; font-size:7.5pt; color:#555; line-height:1.45; }
+  .blatt.seitenumbruch{ margin-top:30px; padding-top:18px; border-top:2px dashed #aaa; break-before:page; page-break-before:always; }
+  @page{ size:A4; margin:16mm 16mm 14mm; }
+  @media print{
+    body.v-offen > *:not(#vorschau){ display:none !important; }
+    body.v-offen{ overflow:visible !important; background:#fff !important; }
+    #vorschau.on{ position:static; display:block; background:none; overflow:visible; }
+    .v-bar{ display:none !important; }
+    .papier{ box-shadow:none; margin:0; padding:0; max-width:none; }
+    .blatt.seitenumbruch{ margin-top:0; padding-top:0; border-top:none; }
+  }
+
   footer{ padding:36px 0 56px; font-size:.85rem; color:var(--ink-soft); line-height:1.65; }
   footer .credit{ margin-top:10px; color:var(--ink-faint); }
   footer p{ max-width:80ch; }
@@ -396,6 +447,7 @@
           </label>
           <label><input type="checkbox" id="mixNew" checked> ungelöste Sätze bevorzugen</label>
           <button type="button" class="btn" id="mixStart">Runde starten</button>
+          <button type="button" class="btn sec" id="mixDruck">Mischblatt drucken</button>
         </div>
         <div class="stand-line"><span id="standGesamt"></span><button type="button" class="linkbtn" id="resetProg">Fortschritt zurücksetzen</button></div>
       </div>
@@ -450,6 +502,8 @@
     </div>
   </footer>
 </main>
+
+<div id="vorschau" role="dialog" aria-modal="true" aria-label="Druckvorschau"></div>
 
 <script>
 /* =====================================================================
@@ -985,6 +1039,10 @@ function buildFaelle(){
         </div>
         ${f.tipp ? `<div class="tipp">${f.tipp}</div>` : ''}
         <div class="panel"><h4><span class="dot"></span>Üben: Kommas setzen</h4><div data-sz="${f.id}"></div></div>
+        <div class="panel"><h4><span class="dot"></span>Zum Ausdrucken</h4>
+          <p>Arbeitsblatt mit Regel, Übungssätzen und Fehlersuche – und dazu das Lösungsblatt mit Begründung zu jedem Komma. Öffnet eine Vorschau, aus der du druckst oder als PDF sicherst.</p>
+          <div class="sz-actions"><button type="button" class="btn" data-druck="ab:${f.id}">Arbeitsblatt</button><button type="button" class="btn sec" data-druck="ls:${f.id}">Lösungsblatt</button></div>
+        </div>
       </div>
     </details>`).join('');
   FAELLE.forEach(f => mountSetzer(document.querySelector(`[data-sz="${f.id}"]`), itemsOf(f)));
@@ -1066,12 +1124,138 @@ document.addEventListener('click', ev => {
   openFall(b.dataset.open);
 });
 
+
+/* =====================================================================
+   ARBEITSBLÄTTER (Druckvorschau)
+   Blätter werden aus FAELLE erzeugt: Arbeitsblatt ohne, Lösungsblatt mit Kommas.
+   Direktlink: ?blatt=ab:<fall> oder ?blatt=ls:<fall>
+   ===================================================================== */
+const plainFalsch = s => s.replace(/\[\[(.*?)\]\]/g, (m, x) => x === 'fehlt' ? '' : x).replace(/\s{2,}/g, ' ');
+const kommasFett = s => esc(s).replace(/,/g, '<b class="kk">,</b>');
+const satzOhne = def => parseSatz(def).words.join(' ');
+function satzMit(def){
+  const p = parseSatz(def);
+  return p.words.map((w, i) => esc(w) + (p.mark[i] === 1 ? '<b class="kk">,</b>' : p.mark[i] === 2 ? '<span class="kf">(,)</span>' : '')).join(' ');
+}
+function erklText(def){
+  const p = parseSatz(def), n = p.words.length, t = [];
+  let k = 0;
+  for (let i = 0; i < n - 1; i++){
+    if (p.mark[i] === 0) continue;
+    const ex = p.e[k] ?? p.e[p.e.length - 1] ?? '';
+    k++;
+    t.push(`Nach „${esc(p.words[i])}“: ${esc(ex)}`);
+  }
+  return t.length ? t.join('<br>') : esc(p.h);
+}
+const hatFrei = sat => sat.some(d => d.s.includes('^'));
+const loesHint = frei => 'Rot = Komma.' + (frei ? ' „(,)“ = Komma freigestellt: mit und ohne ist richtig.' : '');
+
+function blattKopf(titel, untertitel, loesung){
+  return `<div class="b-top"><span>Schreibrichtigkeit · Komma</span><span>${loesung ? 'Lösungsblatt' : 'Arbeitsblatt'}</span></div>` +
+    `<h1>${esc(titel)}</h1>` + (untertitel ? `<p class="b-sub">${esc(untertitel)}</p>` : '') +
+    (loesung ? '' : '<div class="b-felder"><span>Name:</span><span>Klasse:</span><span>Datum:</span></div>');
+}
+function blattFuss(){
+  const stand = new Date().toLocaleDateString('de-AT');
+  const proto = document.querySelector('.hinweis') ? ' · Entwurf, wird noch fachlich geprüft' : '';
+  const url = location.protocol.indexOf('http') === 0 ? '<br>' + esc(location.origin + location.pathname) : '';
+  return `<div class="b-fuss">Regeln nach dem amtlichen Regelwerk der deutschen Rechtschreibung · Beispielsätze: eigene Zusammenstellung · Stand ${stand}${proto}${url}</div>`;
+}
+
+function blattFall(f, loesung){
+  let h = '<section class="blatt">' + blattKopf(f.titel, '', loesung);
+  if (!loesung){
+    h += `<div class="b-merke"><p><b>Regel:</b> ${f.regel}</p><p><b>Probe:</b> ${f.probe}</p></div>`;
+    h += `<div class="b-aufg"><h2>Aufgabe 1: Setze die fehlenden Kommas</h2><p class="b-hint">Manchmal steht kein Komma.${hatFrei(f.saetze) ? ' Bei manchen Sätzen ist ein Komma freigestellt: Beides ist richtig.' : ''}</p>`;
+    h += '<ol class="b-saetze">' + f.saetze.map(d => `<li>${esc(satzOhne(d))}</li>`).join('') + '</ol></div>';
+    h += '<div class="b-aufg"><h2>Aufgabe 2: Finde und verbessere die Fehler</h2><p class="b-hint">In diesen Sätzen fehlt ein Komma oder es steht eines zu viel. Schreibe die Sätze richtig auf.</p>';
+    h += '<ol class="b-saetze b-fehler">' + f.fallen.map(x => `<li>${esc(plainFalsch(x[0]))}<div class="zeile"></div></li>`).join('') + '</ol></div>';
+    h += '<div class="b-aufg"><h2>Aufgabe 3: Eigene Sätze</h2><p class="b-hint">Schreibe zwei eigene Sätze, in denen diese Regel vorkommt, und setze die Kommas.</p><div class="zeile"></div><div class="zeile"></div></div>';
+  } else {
+    h += '<div class="b-aufg"><h2>Aufgabe 1</h2><p class="b-hint">' + loesHint(hatFrei(f.saetze)) + '</p>';
+    h += '<ol class="b-saetze loes">' + f.saetze.map(d => `<li>${satzMit(d)}<small>${erklText(d)}</small></li>`).join('') + '</ol></div>';
+    h += '<div class="b-aufg"><h2>Aufgabe 2</h2>';
+    h += '<ol class="b-saetze b-fehler">' + f.fallen.map(x => `<li><span class="b-falsch">${esc(plainFalsch(x[0]))}</span><br>${kommasFett(x[1])}<small>${esc(x[2])}</small></li>`).join('') + '</ol></div>';
+    h += '<div class="b-aufg"><h2>Aufgabe 3</h2><p class="b-hint">Individuelle Lösungen. Kontrolle: die Probe von der Regel anwenden und jedes Komma begründen können.</p></div>';
+  }
+  return h + blattFuss() + '</section>';
+}
+
+function blattMisch(){
+  const n = +$('#mixN').value;
+  const pool = [];
+  FAELLE.filter(f => mixSel.has(f.id)).forEach(f => f.saetze.forEach(d => pool.push({d, f})));
+  if (!pool.length) return null;
+  const wahl = shuffle(pool).slice(0, n);
+  const titel = 'Kommatraining: Mischblatt';
+  const sub = 'Fälle: ' + [...new Set(wahl.map(x => x.f.titel))].join(', ');
+  let a = '<section class="blatt">' + blattKopf(titel, sub, false);
+  a += `<h2>Setze die fehlenden Kommas</h2><p class="b-hint">Manchmal steht kein Komma.${wahl.some(x => x.d.s.includes('^')) ? ' Bei manchen Sätzen ist ein Komma freigestellt: Beides ist richtig.' : ''}</p>`;
+  a += '<ol class="b-saetze">' + wahl.map(x => `<li>${esc(satzOhne(x.d))}</li>`).join('') + '</ol>' + blattFuss() + '</section>';
+  let l = '<section class="blatt seitenumbruch">' + blattKopf(titel, sub, true);
+  l += '<p class="b-hint">' + loesHint(wahl.some(x => x.d.s.includes('^'))) + '</p>';
+  l += '<ol class="b-saetze loes">' + wahl.map(x => `<li><span class="b-fall">${esc(x.f.titel)}</span><br>${satzMit(x.d)}<small>${erklText(x.d)}</small></li>`).join('') + '</ol>' + blattFuss() + '</section>';
+  return {titel, html: a + l};
+}
+
+let vorschauTitel = '', vorschauFokus = null;
+function zeigeVorschau(html, titel){
+  const v = $('#vorschau');
+  vorschauTitel = titel;
+  vorschauFokus = document.activeElement;
+  v.innerHTML = '<div class="v-bar"><span class="v-titel">Druckvorschau</span><span class="v-hint">Im Druckdialog „Als PDF sichern“ wählen, um eine Datei zu bekommen.</span>' +
+    '<button type="button" class="btn" data-v="drucken">Drucken</button><button type="button" class="btn sec" data-v="zu">Schließen</button></div>' +
+    '<div class="papier">' + html + '</div>';
+  v.classList.add('on');
+  document.body.classList.add('v-offen');
+  v.scrollTop = 0;
+  v.querySelector('[data-v="zu"]').focus();
+}
+function schliesseVorschau(){
+  const v = $('#vorschau');
+  if (!v.classList.contains('on')) return;
+  v.classList.remove('on'); v.innerHTML = '';
+  document.body.classList.remove('v-offen');
+  if (vorschauFokus && vorschauFokus.focus) vorschauFokus.focus();
+}
+function oeffneBlatt(art, id){
+  const f = faelleById(id);
+  if (!f) return;
+  const loes = art === 'ls';
+  zeigeVorschau(blattFall(f, loes), `${loes ? 'Lösungsblatt' : 'Arbeitsblatt'} Komma – ${f.titel}`);
+}
+document.addEventListener('click', ev => {
+  const d = ev.target.closest('[data-druck]');
+  if (d){ const [art, id] = d.dataset.druck.split(':'); oeffneBlatt(art, id); return; }
+  if (ev.target.closest('#mixDruck')){
+    const m = blattMisch();
+    if (!m){ $('#mixRun').innerHTML = '<p class="sz-hint">Wähle mindestens einen Kommafall aus.</p>'; return; }
+    zeigeVorschau(m.html, m.titel); return;
+  }
+  const b = ev.target.closest('[data-v]');
+  if (!b) return;
+  if (b.dataset.v === 'zu') schliesseVorschau();
+  else if (b.dataset.v === 'drucken'){
+    const t = document.title;
+    document.title = vorschauTitel;
+    window.print();
+    document.title = t;
+  }
+});
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') schliesseVorschau(); });
+function oeffneAusUrl(){
+  const m = (new URLSearchParams(location.search).get('blatt') || '').match(/^(ab|ls):([a-z]+)$/);
+  if (m) oeffneBlatt(m[1], m[2]);
+}
+
 buildFacts();
 buildBlick();
 buildFaelle();
 buildMix();
 buildEnt();
 updateStand();
+oeffneAusUrl();
 </script>
 </body>
 </html>

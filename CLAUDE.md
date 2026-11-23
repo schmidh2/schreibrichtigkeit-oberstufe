@@ -28,6 +28,15 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 - **Entscheider** (`ENT`): Knoten sind Fragen (`f`, optional `hilfe`, `o:[[Text, Ziel]]`) oder Ergebnisse (`r:'pflicht'|'kein'|'frei'`, `titel`, `text`, `ex`, `fall`). Zurück und Neu beginnen sind eingebaut.
 - Eine Datenprüfung (Anzahl Erklärungen je Satz, Ziele im Entscheider) lässt sich schnell per Node-Skript schreiben: `FAELLE` und `ENT` per Regex aus der Datei holen und auswerten. Beim Prototyp lief sie fehlerfrei.
 
+## Arbeitsblätter (Druckvorschau)
+- Jede Karte hat unten das Panel „Zum Ausdrucken“ mit **Arbeitsblatt** und **Lösungsblatt**; im Mischtraining gibt es **Mischblatt drucken** (Arbeitsblatt und Lösung auf getrennten Seiten, gleiche Sätze in gleicher Reihenfolge). Alles wird aus `FAELLE` erzeugt, es gibt keine PDF-Dateien zu pflegen.
+- **Arbeitsblatt:** Kopf mit Name/Klasse/Datum, Regel und Probe, Aufgabe 1 (alle Übungssätze ohne Kommas), Aufgabe 2 (die „falsch“-Sätze der Karte verbessern), Aufgabe 3 (eigene Sätze). **Lösungsblatt:** Sätze mit roten Kommas und Begründung je Komma, „(,)“ = freigestellt (Hinweis nur, wenn vorhanden), richtige Fassungen zu Aufgabe 2.
+- Funktionen: `blattFall(f, loesung)`, `blattMisch()`, `zeigeVorschau()`, `oeffneBlatt()`. Die Vorschau ist ein Overlay (`#vorschau`); „Drucken“ ruft `window.print()` auf, im Druck sind alle anderen Teile der Seite ausgeblendet (`body.v-offen`). Dateiname im PDF: Seitentitel wird kurz auf den Blattnamen gesetzt.
+- **Direktlinks:** `?blatt=ab:<fall>` (Arbeitsblatt) und `?blatt=ls:<fall>` (Lösungsblatt), zum Beispiel `?blatt=ab:nebensatz`. Taugt als kostenloses Muster auf einer Landingpage.
+- Die Fußzeile nennt Stand, Quelle und die Adresse der Seite; solange der Prototyp-Hinweis (`.hinweis`) auf der Seite steht, steht auch „Entwurf, wird noch fachlich geprüft“ auf den Blättern.
+- **Getestet** im Browser und als echter Druck (Chrome headless, PDF, A4). Klassenkollision beachten: `.fehler` gehört zu den Karten, die Blätter nutzen `.b-fehler`. Aufgaben tragen `.b-aufg` (kein Seitenumbruch mitten in einer Aufgabe).
+- **Noch kein Zugangsschutz:** Die Blätter zeigen nur, was auf der Seite ohnehin offen steht. Für ein bezahltes Lehrkräfte-Paket müsste der Zugang wie bei den Unterstufen-Projekten verschlüsselt werden (siehe `../Plan_Lehrkraefte-Paket_Oberstufe.md`).
+
 ## Inhaltliche Regeln
 - Regeln folgen dem **amtlichen Regelwerk** (Rat für deutsche Rechtschreibung). Wo es das Komma freistellt (Infinitivgruppen ohne um/ohne/statt, Substantiv oder Hinweiswort; „und/oder“ zwischen vollständigen Hauptsätzen), ist beides richtig und wird als freigestellt gekennzeichnet. Paragrafennummern nur nennen, wenn sie im Regelwerk selbst nachgelesen sind (geprüft: § 75, § 77(5), § 77(7), § 78(3)).
 - Alle Beispielsätze sind eigene. Keine geschützten Texte.
@@ -38,6 +47,7 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 
 ## Offen / nächste Schritte
 - **Inhaltlich prüfen lassen:** alle Kommaregeln und Erklärungen, besonders Infinitivgruppen, Datum im Satz und „zum Beispiel/und zwar“. Noch nicht mit Schüler:innen erprobt.
+- Tests (Komma) mit Lösungsschlüssel und Export, Korrekturbogen, Einsatzvorschläge (Lehrkräfte-Paket, siehe Plan).
 - Weitere Kommafälle: Komma bei Gliederungswörtern (erstens, schließlich), Komma in Briefen (Anrede, Datum, Anschrift), Komma bei Zahlen.
 - Teil 2 **Rechtschreibung**: Groß- und Kleinschreibung (Nominalisierung, Tageszeiten), getrennt/zusammen, das/dass, Fremdwörter, österreichische Besonderheiten.
 - Teil 3 **Grammatik**: Kasus und Präpositionen, Kongruenz, Tempus, Konjunktiv bei indirekter Rede, Passiv und Nominalstil, Satzbrüche.
