@@ -267,6 +267,35 @@
   .mix-opts select{ font:inherit; font-size:.9rem; padding:4px 8px; border:1px solid var(--line); border-radius:6px; background:var(--surface); color:var(--ink); }
   .stand-line{ margin-top:14px; font-size:.88rem; color:var(--ink-soft); display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
 
+
+  /* ---------- Fehlerprofil ---------- */
+  .modus{ margin-bottom:12px; }
+  .prof-grid{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:16px; align-items:start; }
+  @media (max-width:820px){ .prof-grid{ grid-template-columns:1fr; } }
+  .rec{ border-left:3px solid var(--accent); background:var(--surface); border-radius:0 10px 10px 0; padding:14px 16px; margin-bottom:12px; }
+  .rec.ok{ border-left-color:var(--ok); }
+  .rec h3{ font-size:1.05rem; margin-bottom:4px; }
+  .rec p{ font-size:.92rem; color:var(--ink-soft); line-height:1.55; }
+  .rec .sz-actions{ margin-top:10px; }
+  .rep{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .rep .n{ font-family:var(--font-display); font-size:1.7rem; font-weight:600; color:var(--accent); margin-right:6px; }
+  .rep p{ font-size:.9rem; color:var(--ink-soft); line-height:1.55; margin-top:4px; }
+  .prof-tab{ background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .prof-row{ display:grid; grid-template-columns:minmax(0,1.3fr) 48px minmax(0,1fr) 110px; gap:10px 14px; align-items:center; padding:10px 14px; border-top:1px solid var(--line); font-size:.9rem; }
+  .prof-row:first-child{ border-top:none; }
+  .prof-row.kopf{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); background:var(--surface-2); }
+  .prof-row .nm{ font-weight:600; min-width:0; }
+  .prof-row .anz{ font-family:var(--font-mono); font-size:.78rem; color:var(--ink-soft); text-align:right; }
+  .bar{ height:9px; background:var(--surface-2); border-radius:5px; overflow:hidden; border:1px solid var(--line); }
+  .bar i{ display:block; height:100%; background:var(--ok); }
+  .bar.schwach i{ background:var(--red); }
+  .bar.mitte i{ background:var(--warn); }
+  .punkte{ display:flex; gap:3px; justify-content:flex-end; }
+  .pt{ width:8px; height:8px; border-radius:50%; background:var(--ok); }
+  .pt.x{ background:var(--red); }
+  .prof-hint{ margin-top:10px; font-size:.84rem; color:var(--ink-soft); line-height:1.55; }
+  @media (max-width:560px){ .prof-row{ grid-template-columns:minmax(0,1fr) 50px; } .prof-row .bar, .prof-row .punkte{ grid-column:1 / -1; justify-content:flex-start; } .prof-row.kopf .bar, .prof-row.kopf .punkte{ display:none; } }
+
   /* ---------- Matura ---------- */
   .m-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
   @media (max-width:820px){ .m-grid{ grid-template-columns:1fr; } }
@@ -345,6 +374,7 @@
       <a href="#blick">Auf einen Blick</a>
       <a href="#faelle">Kommafälle</a>
       <a href="#misch">Mischtraining</a>
+      <a href="#profil">Mein Profil</a>
       <a href="#matura">Matura</a>
     </nav>
   </div>
@@ -446,12 +476,24 @@
             <select id="mixN"><option>5</option><option selected>10</option><option>15</option><option>20</option></select>
           </label>
           <label><input type="checkbox" id="mixNew" checked> ungelöste Sätze bevorzugen</label>
+          <label><input type="checkbox" id="mixGen"> neue Sätze (automatisch erzeugt)</label>
           <button type="button" class="btn" id="mixStart">Runde starten</button>
           <button type="button" class="btn sec" id="mixDruck">Mischblatt drucken</button>
         </div>
-        <div class="stand-line"><span id="standGesamt"></span><button type="button" class="linkbtn" id="resetProg">Fortschritt zurücksetzen</button></div>
+        <div class="stand-line"><span id="standGesamt"></span><button type="button" class="linkbtn" data-reset="1">Fortschritt zurücksetzen</button></div>
       </div>
       <div id="mixRun"></div>
+    </div>
+  </section>
+
+  <section class="block" id="profil">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>Mein Fehlerprofil</h2>
+        <p>Die Seite merkt sich auf diesem Gerät, bei welchen Kommafällen du Fehler machst, und schlägt dir vor, was du als Nächstes üben solltest. Falsche Sätze kommen nach einiger Zeit von selbst wieder. Nichts davon wird übertragen.</p>
+      </div>
+      <div id="profilBox" aria-live="polite"></div>
+      <div id="profilRun"></div>
     </div>
   </section>
 
@@ -885,6 +927,9 @@ function loadProg(){ try { return JSON.parse(localStorage.getItem(STORE)) || {so
 function saveProg(p){ try { localStorage.setItem(STORE, JSON.stringify(p)); } catch(e){} }
 let prog = loadProg();
 if (!prog.solved) prog.solved = {};
+if (!prog.stat) prog.stat = {};
+if (!prog.box) prog.box = {};
+const TAGE = [0, 1, 3, 7, 14];   // Wiederholungsabstände (Leitner-Stufen) in Tagen
 
 function updateStand(){
   let gesamt = 0, geloest = 0;
@@ -897,6 +942,7 @@ function updateStand(){
   });
   const el = $('#standGesamt');
   if (el) el.textContent = `Dein Stand: ${geloest} von ${gesamt} Sätzen fehlerfrei gelöst.`;
+  renderProfil();
 }
 
 /* =====================================================================
@@ -966,14 +1012,18 @@ function mountSetzer(root, items, opts={}){
   function check(){
     done = true;
     const it = items[idx], p = it.p, n = p.words.length;
-    let ok = true;
+    let miss = 0, extra = 0;
     for (let i=0;i<n-1;i++){
-      if ((p.mark[i]===1 && !user[i]) || (p.mark[i]===0 && user[i])) ok = false;
+      if (p.mark[i]===1 && !user[i]) miss++;
+      if (p.mark[i]===0 && user[i]) extra++;
     }
-    if (ok){
-      if (!it.versucht) perfekt++;
-      prog.solved[it.id] = 1; saveProg(prog); updateStand();
+    const ok = miss === 0 && extra === 0;
+    if (!it.versucht){
+      recordResult(it, ok, miss, extra);   // nur der erste Versuch zählt für das Profil
+      if (ok) perfekt++;
     }
+    if (ok && !it.gen) prog.solved[it.id] = 1;
+    saveProg(prog); updateStand();
     it.versucht = true;
     render();
   }
@@ -995,7 +1045,7 @@ function mountSetzer(root, items, opts={}){
 }
 
 function itemsOf(f){
-  return f.saetze.map((def,i) => ({id:f.id+':'+i, label:f.titel, p:parseSatz(def)}));
+  return f.saetze.map((def,i) => ({id:f.id+':'+i, fall:f.id, label:f.titel, p:parseSatz(def)}));
 }
 
 /* =====================================================================
@@ -1038,14 +1088,14 @@ function buildFaelle(){
             <div class="warum">${esc(x[2])}</div></li>`).join('')}</ul>
         </div>
         ${f.tipp ? `<div class="tipp">${f.tipp}</div>` : ''}
-        <div class="panel"><h4><span class="dot"></span>Üben: Kommas setzen</h4><div data-sz="${f.id}"></div></div>
+        <div class="panel"><h4><span class="dot"></span>Üben: Kommas setzen</h4>${GEN[f.id] ? `<div class="chiprow modus" data-modus="${f.id}" role="group" aria-label="Satzquelle"><button type="button" class="chipbtn" data-set="fest" aria-pressed="true">Feste Sätze</button><button type="button" class="chipbtn" data-set="neu" aria-pressed="false">Neue Sätze (automatisch erzeugt)</button></div>` : ''}<div data-sz="${f.id}"></div></div>
         <div class="panel"><h4><span class="dot"></span>Zum Ausdrucken</h4>
           <p>Arbeitsblatt mit Regel, Übungssätzen und Fehlersuche – und dazu das Lösungsblatt mit Begründung zu jedem Komma. Öffnet eine Vorschau, aus der du druckst oder als PDF sicherst.</p>
           <div class="sz-actions"><button type="button" class="btn" data-druck="ab:${f.id}">Arbeitsblatt</button><button type="button" class="btn sec" data-druck="ls:${f.id}">Lösungsblatt</button></div>
         </div>
       </div>
     </details>`).join('');
-  FAELLE.forEach(f => mountSetzer(document.querySelector(`[data-sz="${f.id}"]`), itemsOf(f)));
+  FAELLE.forEach(f => mountFall(f, 'fest'));
 }
 
 /* Mischtraining */
@@ -1060,9 +1110,6 @@ function buildMix(){
     b.setAttribute('aria-pressed', mixSel.has(id));
   });
   $('#mixStart').addEventListener('click', startMix);
-  $('#resetProg').addEventListener('click', () => {
-    if (confirm('Den gesamten Fortschritt in diesem Browser zurücksetzen?')){ prog = {solved:{}}; saveProg(prog); updateStand(); }
-  });
 }
 function startMix(){
   const n = +$('#mixN').value, bevor = $('#mixNew').checked;
@@ -1072,7 +1119,14 @@ function startMix(){
   if (!pool.length){ run.innerHTML = '<p class="sz-hint">Wähle mindestens einen Kommafall aus.</p>'; return; }
   pool = shuffle(pool);
   if (bevor) pool.sort((a,b) => (prog.solved[a.id]?1:0) - (prog.solved[b.id]?1:0));
-  const items = shuffle(pool.slice(0, n));
+  let items = shuffle(pool.slice(0, n));
+  if ($('#mixGen').checked){
+    const fl = FAELLE.filter(f => mixSel.has(f.id) && GEN[f.id]);
+    if (!fl.length){ run.innerHTML = '<p class="sz-hint">Für die gewählten Fälle gibt es noch keine automatisch erzeugten Sätze.</p>'; return; }
+    const gp = [];
+    fl.forEach(f => genItems(f, Math.ceil(n / fl.length) + 2).forEach(it => gp.push(it)));
+    items = shuffle(gp).slice(0, n);
+  }
   const fresh = document.createElement('div');
   run.innerHTML = ''; run.appendChild(fresh);
   mountSetzer(fresh, items, {again: startMix});
@@ -1124,6 +1178,275 @@ document.addEventListener('click', ev => {
   openFall(b.dataset.open);
 });
 
+
+/* =====================================================================
+   SÄTZE AUS BAUSTEINEN (Stufe 1, ohne KI)
+   Jeder Generator setzt Sätze aus fest geschriebenen, zueinander passenden Teilen
+   zusammen. Die Kommas ergeben sich aus dem Aufbau, die Lösung ist daher sicher.
+   Ein Generator liefert {s, e, h} im selben Format wie FAELLE[].saetze.
+   ===================================================================== */
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const sample = (a, k) => shuffle(a).slice(0, k);
+const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+
+const AUFZ_THEMEN = [
+  {intro:'Auf dem Markt gab es', items:['Obst','Gemüse','Käse','Brot','Blumen','Honig','Eier','Fisch']},
+  {intro:'In der Schultasche waren', items:['Hefte','Stifte','ein Lineal','ein Federmäppchen','die Jause','eine Trinkflasche']},
+  {intro:'Im Kurs lernen wir', items:['Grammatik','Rechtschreibung','Textanalyse','Argumentieren','Zusammenfassen','Kommasetzung']},
+  {intro:'Für die Reise packt sie', items:['Kleidung','Bücher','Sonnencreme','eine Kamera','einen Reiseführer']},
+  {intro:'Im Park sah man', items:['Jogger','Radfahrer','Kinder','Hunde','Spaziergänger']}
+];
+const ADJ_F = ['kluge','freundliche','geduldige','humorvolle','hilfsbereite','kreative','ehrliche'];
+const NOMEN_F = ['Lehrerin','Trainerin','Autorin','Nachbarin','Ärztin'];
+const SONDERN = [['Sie liest nicht','Krimis','Gedichte'],['Er spielt nicht','Fußball','Tennis'],['Wir trinken nicht','Tee','Kaffee'],['Er studiert nicht','Medizin','Jus'],['Sie malt nicht','Porträts','Landschaften']];
+const ABER_SUBJ = ['Der Film','Das Buch','Der Vortrag','Die Reise','Der Test'];
+const ABER_ADJ = [['kurz','spannend'],['teuer','schlecht'],['alt','schön'],['einfach','wirksam'],['anstrengend','lohnend']];
+
+const NS_PAARE = [  // [Hauptsatz, Hauptsatz mit Verb an erster Stelle, Nebensatz]
+  ['Wir bleiben zu Hause','bleiben wir zu Hause','weil es stark regnet'],
+  ['Die Schüler freuen sich','freuen sich die Schüler','weil die Schularbeit verschoben wird'],
+  ['Er nimmt einen Schirm mit','nimmt er einen Schirm mit','weil es regnen könnte'],
+  ['Sie lernt jeden Tag','lernt sie jeden Tag','weil die Matura näher rückt'],
+  ['Das Fest fällt aus','fällt das Fest aus','weil der Saal gesperrt ist'],
+  ['Ich komme zu spät','komme ich zu spät','weil der Bus Verspätung hat'],
+  ['Wir treffen uns früher','treffen wir uns früher','weil das Spiel um acht beginnt'],
+  ['Die Klasse schreibt eine Wiederholung','schreibt die Klasse eine Wiederholung','weil viele Fehler passiert sind'],
+  ['Er kommt zur Schule','kommt er zur Schule','obwohl er krank ist'],
+  ['Wir gehen hinaus','gehen wir hinaus','obwohl es kalt ist'],
+  ['Sie lächelt','lächelt sie','obwohl sie müde ist'],
+  ['Das Spiel beginnt','beginnt das Spiel','wenn alle da sind'],
+  ['Ich rufe dich an','rufe ich dich an','wenn ich zu Hause bin']
+];
+const DASS_M = ['Ich glaube','Du glaubst','Sie hofft','Wir wissen','Er meint','Die Lehrerin sagt','Mein Bruder behauptet','Die Autorin betont'];
+const DASS_N = ['der Film spannend ist','die Aufgabe leicht ist','der Bus zu spät kommt','alle pünktlich sind','die Prüfung fair war','das Konzert schon vorbei ist'];
+const OB_M = ['Ich frage mich','Sie fragt','Wir wissen nicht','Er überlegt noch'];
+const OB_N = ['das Thema wichtig ist','der Zug pünktlich kommt','die Prüfung schwer wird','alle gekommen sind','der Text zu lang ist'];
+const EINSCH_KONJ = [['obwohl','müde war'],['weil','Zeit hatte'],['nachdem','gegessen hatte']];
+const EINSCH_PRED = ['kam','blieb','lachte','kämpfte'];
+
+const REL_NACH = [['Ich kenne eine Autorin','die viele Preise gewonnen hat'],['Das ist der Lehrer','der uns die Regel erklärt hat'],['Sie besucht eine Schule','die einen eigenen Chor hat'],['Wir lesen ein Buch','das alle begeistert'],['Er hat einen Hund','der jeden Tag bellt']];
+const REL_MITTE = [['Der Text','den wir gelesen haben','ist ein Kommentar'],['Das Buch','das ich dir geliehen habe','gehört meiner Schwester'],['Die Lehrerin','die uns begleitet','ist sehr geduldig'],['Der Film','den wir gesehen haben','war ziemlich lang'],['Die Aufgabe','die wir gestern hatten','war leicht']];
+const REL_PRAEP = [['Das ist das Haus','in dem sie aufgewachsen ist'],['Er nennt drei Gründe','von denen der letzte überzeugt'],['Wir kennen die Lehrerin','mit der wir gearbeitet haben'],['Sie zeigt mir das Buch','über das alle sprechen']];
+
+const INF_UM = [['Sie lernt täglich','um die Matura zu bestehen'],['Er spart Geld','um ein Fahrrad zu kaufen'],['Wir treffen uns früh','um den Zug zu erreichen'],['Er geht früh ins Bett','um morgen fit zu sein']];
+const INF_OHNE = [['Er ging','ohne sich zu verabschieden'],['Sie fuhr los','ohne auf die Uhr zu sehen'],['Der Schüler antwortete','ohne lange nachzudenken'],['Wir gingen vorbei','ohne anzuhalten']];
+const INF_STATT = [['Statt zu antworten','schwieg sie'],['Statt zu streiten','suchten wir eine Lösung'],['Statt nach Hause zu gehen','blieb er im Park']];
+const INF_SUBST = [['Ihr Wunsch','ein Buch zu schreiben','wurde wahr'],['Die Absicht','früh abzureisen','war klar'],['Der Plan','im Sommer zu verreisen','gefiel allen']];
+
+const SR_KOMMA = [['Das Wetter war schlecht','aber die Stimmung war gut'],['Er hat viel gelernt','doch er ist nervös'],['Die Aufgabe war schwer','denn niemand kannte die Regel'],['Sie schreibt gern','denn sie hat viele Ideen'],['Der Zug hatte Verspätung','deshalb kamen wir zu spät'],['Die Sonne schien','trotzdem war es kalt']];
+const SR_KEIN = [['Er nahm seine Tasche','und ging zur Tür'],['Sie packte das Buch ein','und verließ den Raum'],['Wir standen früh auf','und frühstückten gemeinsam']];
+
+const WR_S = ['Ich komme morgen','Das Wetter wird besser','Die Aufgabe ist leicht','Wir treffen uns um acht','Der Bus kommt gleich','Ich habe die Regel verstanden'];
+const WR_Q = ['Kommst du morgen?','Wann beginnt die Stunde?','Hast du die Aufgabe verstanden?','Wo ist mein Heft?','Wer hilft mir?'];
+const WR_E = ['Komm sofort her!','Das ist großartig!','Pass auf!','Seid leise!'];
+const WR_V = ['sagte','meinte','erklärte','antwortete'];
+const WR_W = ['sie','er','die Lehrerin','der Trainer','mein Freund'];
+const WR_MITTE = [['Ich komme','aber später.'],['Das Spiel beginnt','sobald alle da sind.'],['Die Aufgabe ist leicht','wenn man die Regel kennt.'],['Wir fahren los','wenn der Bus kommt.']];
+
+const GEN = {
+  aufzaehlung: [
+    () => {
+      const t = pick(AUFZ_THEMEN), k = 3 + Math.floor(Math.random() * 3), it = sample(t.items, k), und = pick(['und','und','oder']);
+      const teile = it.slice(0, k - 1).map((x, i) => i < k - 2 ? x + ',' : x);
+      return {s: `${t.intro} ${teile.join(' ')} ${und} ${it[k - 1]}.`, e:[`Aufzählung: Komma zwischen gleichrangigen Teilen. Vor „${und}“ steht keines.`]};
+    },
+    () => {
+      const a = sample(ADJ_F, 3), n = pick(NOMEN_F);
+      return {s: `Sie ist eine ${a[0]}, ${a[1]} und ${a[2]} ${n}.`, e:[`Die Adjektive sind gleichrangig („${a[0]} und ${a[1]}“): Komma; vor „und“ keines.`]};
+    },
+    () => { const x = pick(SONDERN); return {s: `${x[0]} ${x[1]}, sondern ${x[2]}.`, e:['Vor „sondern“ steht ein Komma.']}; },
+    () => { const a = pick(ABER_ADJ); return {s: `${pick(ABER_SUBJ)} war ${a[0]}, aber ${a[1]}.`, e:['Vor „aber“ steht immer ein Komma – auch zwischen einzelnen Wörtern.']}; }
+  ],
+  satzreihe: [
+    () => { const x = pick(SR_KOMMA); return {s: `${x[0]}, ${x[1]}.`, e:[x[1].startsWith('deshalb') || x[1].startsWith('trotzdem') ? `„${x[1].split(' ')[0]}“ ist ein Adverb, kein Bindewort: Die zwei Hauptsätze brauchen ein Komma.` : `Zwei Hauptsätze mit „${x[1].split(' ')[0]}“: Komma.`]}; },
+    () => { const x = pick(SR_KEIN); return {s: `${x[0]} ${x[1]}.`, h:'Kein Komma: gemeinsames Subjekt, ein Satz mit zwei Prädikaten.'}; }
+  ],
+  nebensatz: [
+    () => { const x = pick(NS_PAARE); return {s: `${cap(x[2])}, ${x[1]}.`, e:['Der vorangestellte Nebensatz endet mit einem Komma.']}; },
+    () => { const x = pick(NS_PAARE); return {s: `${x[0]}, ${x[2]}.`, e:['Nachgestellter Nebensatz: Komma davor.']}; },
+    () => ({s: `${pick(DASS_M)}, dass ${pick(DASS_N)}.`, e:['Vor „dass“ steht immer ein Komma.']}),
+    () => ({s: `${pick(OB_M)}, ob ${pick(OB_N)}.`, e:['Vor „ob“ steht ein Komma.']}),
+    () => {
+      const sub = pick(['er','sie']), k = pick(EINSCH_KONJ);
+      return {s: `${pick(DASS_M)}, dass ${sub}, ${k[0]} ${sub} ${k[1]}, ${pick(EINSCH_PRED)}.`,
+        e:['Komma vor dem Nebensatz „dass …“.','Der eingeschobene Nebensatz beginnt mit einem Komma …','… und endet mit einem Komma (Kommapaar).']};
+    }
+  ],
+  relativsatz: [
+    () => { const x = pick(REL_NACH); return {s: `${x[0]}, ${x[1]}.`, e:['Nachgestellter Relativsatz: Komma davor.']}; },
+    () => { const x = pick(REL_MITTE); return {s: `${x[0]}, ${x[1]}, ${x[2]}.`, e:['Der eingeschobene Relativsatz beginnt mit einem Komma …','… und endet mit einem Komma (Kommapaar).']}; },
+    () => { const x = pick(REL_PRAEP); return {s: `${x[0]}, ${x[1]}.`, e:[`Das Komma steht vor der ganzen Wortgruppe „${x[1].split(' ').slice(0, 2).join(' ')}“.`]}; }
+  ],
+  infinitiv: [
+    () => { const x = pick(INF_UM); return {s: `${x[0]}, ${x[1]}.`, e:['Bei „um … zu“ steht immer ein Komma.']}; },
+    () => { const x = pick(INF_OHNE); return {s: `${x[0]}, ${x[1]}.`, e:['Bei „ohne … zu“ steht immer ein Komma.']}; },
+    () => { const x = pick(INF_STATT); return {s: `${x[0]}, ${x[1]}.`, e:['Infinitivgruppe mit „statt“: Komma am Ende der vorangestellten Gruppe.']}; },
+    () => { const x = pick(INF_SUBST); return {s: `${x[0]}, ${x[1]}, ${x[2]}.`, e:[`Die Infinitivgruppe hängt vom Substantiv „${x[0].split(' ').pop()}“ ab: Komma davor …`,'… und, weil sie mitten im Satz steht, auch danach.']}; }
+  ],
+  woertlich: [
+    () => {
+      const art = pick(['s','s','q','e']);
+      const r = art === 's' ? pick(WR_S) : art === 'q' ? pick(WR_Q) : pick(WR_E);
+      const v = art === 's' ? pick(WR_V) : art === 'q' ? 'fragte' : pick(['rief','schrie']);
+      return {s: `„${r}“, ${v} ${pick(WR_W)}.`, e:[art === 's' ? 'Nach dem schließenden Anführungszeichen steht bei nachgestelltem Begleitsatz ein Komma; der Punkt in der Rede entfällt.' : 'Das Frage- bzw. Ausrufezeichen bleibt – danach folgt trotzdem ein Komma.']};
+    },
+    () => { const x = pick(WR_MITTE); return {s: `„${x[0]}“, ${pick(WR_V)} ${pick(WR_W)}, „${x[1]}“`, e:['Komma nach dem ersten Teil der Rede.','Komma nach dem eingeschobenen Begleitsatz.']}; },
+    () => { const w = pick(WR_W); return {s: `${cap(w)} ${pick(WR_V)}: „${pick(WR_S)}.“`, h:'Kein Komma: Vor der Rede steht ein Doppelpunkt.'}; }
+  ]
+};
+
+function genItems(f, n){
+  const out = [], seen = new Set();
+  const fest = new Set(f.saetze.map(d => d.s.replace(/[,^]/g, '')));
+  let guard = 0;
+  while (out.length < n && guard++ < n * 25){
+    const def = pick(GEN[f.id])();
+    const roh = def.s.replace(/[,^]/g, '');
+    if (seen.has(def.s) || fest.has(roh)) continue;
+    seen.add(def.s);
+    out.push({id:'gen:' + f.id + ':' + out.length, gen:true, fall:f.id, label:f.titel + ' · neu', p:parseSatz(def)});
+  }
+  return out;
+}
+
+function mountFall(f, modus){
+  const root = document.querySelector(`[data-sz="${f.id}"]`);
+  root.innerHTML = '';
+  const c = document.createElement('div');
+  root.appendChild(c);
+  if (modus === 'neu' && GEN[f.id]) mountSetzer(c, genItems(f, 8), {again: () => mountFall(f, 'neu')});
+  else mountSetzer(c, itemsOf(f));
+}
+
+/* =====================================================================
+   FEHLERPROFIL, EMPFEHLUNG, WIEDERHOLUNG (alles lokal im Browser)
+   prog.stat[fall]  = {n, ok, fehlend, zuviel, verlauf:[1|0 …], zuletzt}
+   prog.box[satzId] = {s: Leitner-Stufe, due: Zeitstempel}  (nur feste Sätze)
+   Nur der erste Versuch je Satz zählt.
+   ===================================================================== */
+function recordResult(it, ok, miss, extra){
+  if (!it.fall) return;
+  const st = prog.stat[it.fall] || (prog.stat[it.fall] = {n:0, ok:0, fehlend:0, zuviel:0, verlauf:[]});
+  st.n++; if (ok) st.ok++;
+  st.fehlend += miss; st.zuviel += extra;
+  st.verlauf.push(ok ? 1 : 0);
+  if (st.verlauf.length > 20) st.verlauf.shift();
+  st.zuletzt = Date.now();
+  if (!it.gen){
+    const b = prog.box[it.id] || (prog.box[it.id] = {s:0, due:0});
+    b.s = ok ? Math.min(b.s + 1, TAGE.length - 1) : 0;
+    b.due = ok ? Date.now() + TAGE[b.s] * 86400000 : Date.now();
+  }
+}
+function festerSatz(id){
+  const [fid, i] = id.split(':'), f = faelleById(fid);
+  return f && f.saetze[+i] ? {id, fall:fid, label:f.titel, p:parseSatz(f.saetze[+i])} : null;
+}
+function fehlerart(st){
+  if (st.fehlend + st.zuviel === 0) return '';
+  if (st.fehlend >= 2 * st.zuviel) return 'meist fehlen Kommas';
+  if (st.zuviel >= 2 * st.fehlend) return 'meist stehen Kommas zu viel';
+  return 'sowohl fehlende als auch überzählige Kommas';
+}
+function faelligeSaetze(){
+  const jetzt = Date.now();
+  return Object.keys(prog.box).filter(id => prog.box[id].due <= jetzt).map(festerSatz).filter(Boolean);
+}
+
+function renderProfil(){
+  const box = $('#profilBox');
+  if (!box) return;
+  const rows = FAELLE.map(f => ({f, st: prog.stat[f.id] || {n:0, ok:0, fehlend:0, zuviel:0, verlauf:[]}}));
+  const gesamt = rows.reduce((a, r) => a + r.st.n, 0);
+  const faellig = faelligeSaetze().length;
+
+  // Empfehlungen
+  const schwach = rows.filter(r => r.st.n >= 3 && r.st.ok / r.st.n < 0.75).sort((a, b) => a.st.ok / a.st.n - b.st.ok / b.st.n).slice(0, 2);
+  let recs = '';
+  const recHtml = (r, ok) => {
+    const f = r.f;
+    const art = fehlerart(r.st);
+    return `<div class="rec"><h3>${esc(f.titel)}</h3><p>${r.st.ok} von ${r.st.n} Sätzen beim ersten Versuch richtig${art ? ' – ' + art : ''}.</p>` +
+      `<div class="sz-actions"><button type="button" class="btn" data-prof="${GEN[f.id] ? 'neu' : 'fest'}:${f.id}">${GEN[f.id] ? 'Neue Sätze üben' : 'Sätze üben'}</button><button type="button" class="btn sec" data-open="${f.id}">Karte öffnen</button></div></div>`;
+  };
+  if (gesamt === 0){
+    recs = `<div class="rec"><h3>Noch keine Daten</h3><p>Löse ein paar Übungssätze in den Karten oder im Mischtraining. Danach siehst du hier, wo du sicher bist und was du wiederholen solltest.</p></div>`;
+  } else if (schwach.length){
+    recs = '<p class="prof-hint" style="margin:0 0 8px">Als Nächstes sinnvoll:</p>' + schwach.map(r => recHtml(r)).join('');
+  } else {
+    const neu = rows.find(r => r.st.n === 0);
+    recs = `<div class="rec ok"><h3>Gut unterwegs</h3><p>${neu ? `Noch nicht geübt: <b>${esc(neu.f.titel)}</b>. ` : ''}Bei allen geübten Fällen liegst du im grünen Bereich. Probiere das Mischtraining mit neuen Sätzen.</p>` +
+      `<div class="sz-actions">${neu ? `<button type="button" class="btn" data-open="${neu.f.id}">Karte öffnen</button>` : ''}<a class="btn sec" style="text-decoration:none;display:inline-block" href="#misch">Zum Mischtraining</a></div></div>`;
+  }
+  const alleFehl = rows.reduce((a, r) => a + r.st.fehlend, 0), alleZuviel = rows.reduce((a, r) => a + r.st.zuviel, 0);
+  let gesamtHinweis = '';
+  if (gesamt >= 8 && alleFehl + alleZuviel > 0){
+    const art = fehlerart({fehlend:alleFehl, zuviel:alleZuviel});
+    const tipp = alleFehl >= 2 * alleZuviel ? 'Prüfe an jeder Grenze zwischen zwei Teilsätzen, ob ein Komma fehlt (Personalformen zählen).'
+      : alleZuviel >= 2 * alleFehl ? 'Setze kein Komma vor „und/oder“ zwischen gleichrangigen Teilen und nicht zwischen Subjekt und Prädikat.'
+      : 'Mach bei jedem Komma die Probe: Warum steht es hier, und warum nicht dort?';
+    gesamtHinweis = `<p class="prof-hint"><b>Insgesamt:</b> ${art}. ${tipp}</p>`;
+  }
+
+  // Wiederholung
+  let rep;
+  if (faellig > 0){
+    rep = `<div class="rep"><span class="n">${faellig}</span>${faellig === 1 ? 'Satz' : 'Sätze'} zur Wiederholung fällig<p>Das sind Sätze, die du falsch hattest oder deren Abstand abgelaufen ist.</p><div class="sz-actions"><button type="button" class="btn" data-prof="faellig">Wiederholung starten</button></div></div>`;
+  } else {
+    const kuenftig = Object.values(prog.box).map(b => b.due).filter(d => d > Date.now()).sort((a, b) => a - b)[0];
+    rep = `<div class="rep"><span class="n">0</span>Sätze fällig<p>${kuenftig ? 'Die nächste Wiederholung ist am ' + new Date(kuenftig).toLocaleDateString('de-AT') + ' fällig.' : 'Sobald du Sätze gelöst hast, kommen sie nach 1, 3, 7 und 14 Tagen wieder. Falsche Sätze sofort.'}</p></div>`;
+  }
+
+  // Tabelle
+  const zeile = r => {
+    const q = r.st.n ? Math.round(100 * r.st.ok / r.st.n) : 0;
+    const kl = !r.st.n ? '' : q < 60 ? 'schwach' : q < 85 ? 'mitte' : '';
+    const dots = r.st.verlauf.slice(-10).map(v => `<span class="pt${v ? '' : ' x'}" title="${v ? 'richtig' : 'Fehler'}"></span>`).join('');
+    return `<div class="prof-row"><span class="nm">${esc(r.f.titel)}</span><span class="anz">${r.st.n ? q + ' %' : '–'}</span>` +
+      `<span class="bar ${kl}" role="img" aria-label="${q} Prozent richtig"><i style="width:${q}%"></i></span><span class="punkte" aria-label="letzte Versuche">${dots}</span></div>`;
+  };
+  const tab = `<div class="prof-tab"><div class="prof-row kopf"><span>Fall</span><span style="text-align:right">%</span><span class="bar" style="background:none;border:none"></span><span class="punkte">letzte 10</span></div>${rows.map(zeile).join('')}</div>`;
+
+  box.innerHTML = `<div class="prof-grid"><div>${recs}${gesamtHinweis}</div><div>${rep}</div></div><div style="margin-top:16px">${tab}</div>` +
+    `<p class="prof-hint">Gezählt wird der erste Versuch je Satz. Alles bleibt in diesem Browser und wird nicht übertragen.</p>`;
+}
+
+function starteProfilRunde(items){
+  const run = $('#profilRun');
+  if (!items.length){ run.innerHTML = '<p class="sz-hint">Für diese Auswahl sind keine Sätze verfügbar.</p>'; return; }
+  const c = document.createElement('div');
+  run.innerHTML = ''; run.appendChild(c);
+  mountSetzer(c, items, {again: () => starteProfilRunde(items.map(i => ({...i, versucht:false})))});
+  run.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+document.addEventListener('click', ev => {
+  const m = ev.target.closest('[data-modus] .chipbtn');
+  if (m){
+    const wrap = m.closest('[data-modus]');
+    wrap.querySelectorAll('.chipbtn').forEach(b => b.setAttribute('aria-pressed', b === m));
+    mountFall(faelleById(wrap.dataset.modus), m.dataset.set);
+    return;
+  }
+  const pr = ev.target.closest('[data-prof]');
+  if (pr){
+    const [art, id] = pr.dataset.prof.split(':');
+    if (art === 'faellig'){
+      const items = faelligeSaetze().sort((a, b) => prog.box[a.id].due - prog.box[b.id].due).slice(0, 10);
+      starteProfilRunde(items);
+    } else {
+      const f = faelleById(id);
+      if (art === 'neu') starteProfilRunde(genItems(f, 8));
+      else starteProfilRunde(shuffle(itemsOf(f)).sort((a, b) => (prog.solved[a.id] ? 1 : 0) - (prog.solved[b.id] ? 1 : 0)).slice(0, 8));
+    }
+    return;
+  }
+  if (ev.target.closest('[data-reset]')){
+    if (confirm('Den gesamten Fortschritt und das Fehlerprofil in diesem Browser zurücksetzen?')){
+      prog = {solved:{}, stat:{}, box:{}}; saveProg(prog); updateStand();
+    }
+  }
+});
 
 /* =====================================================================
    ARBEITSBLÄTTER (Druckvorschau)
