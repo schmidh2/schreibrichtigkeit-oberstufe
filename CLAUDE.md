@@ -4,6 +4,11 @@ Nachschlagewerk mit Online-Übungen zur **Sprachrichtigkeit** (Zeichensetzung, s
 
 Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik und Fehlerjagd folgen.
 
+## Veröffentlichung
+- Repo `schmidh2/schreibrichtigkeit-oberstufe` (öffentlich), live über GitHub Pages aus `main`: https://schmidh2.github.io/schreibrichtigkeit-oberstufe/ – Pushes auf `main` veröffentlichen sofort. Beim Testen `?v=2` an die Adresse hängen (Cache).
+- `gh` ist angemeldet, `git push` funktioniert. Der gesamte Inhalt ist öffentlich lesbar.
+- Die Kommaregeln sind noch nicht fachlich geprüft; Fehler werden nach dem Prüfen direkt auf `main` korrigiert.
+
 ## Technik
 - Eine einzige, in sich geschlossene `index.html` (HTML + CSS + JS), keine Build-Schritte.
 - **Keine externen Schriften.** Die Schrift-Tokens nennen Fraunces/Public Sans/IBM Plex Mono zuerst, fallen aber auf Systemschriften zurück (Datenschutz, kein Google-Fonts-Aufruf). Wer das Aussehen des Textsortenatlas will, legt die Schriftdateien selbst auf den Server und bindet sie per `@font-face` ein.
@@ -37,4 +42,4 @@ Stand: **Teil 1 (Komma)** ist als Prototyp fertig. Rechtschreibung, Grammatik un
 - Teil 3 **Grammatik**: Kasus und Präpositionen, Kongruenz, Tempus, Konjunktiv bei indirekter Rede, Passiv und Nominalstil, Satzbrüche.
 - **Fehlerjagd** mit eigenen Matura-ähnlichen Texten und **Fehlerprofil** (lokal): zählt Fehlerarten mit und schlägt passende Karten vor.
 - Verknüpfung mit dem Textsortenatlas (Zitieren, indirekte Rede) und eine Kommaübung mit längeren Absätzen statt Einzelsätzen.
-- Veröffentlichen: Repo auf GitHub anlegen und GitHub Pages oder den eigenen WebSpace nutzen (siehe Überlegung zu Domain und WebSpace).
+- Später eventuell auf den eigenen WebSpace mit Domain umziehen (der lokale Fortschritt im Browser geht beim Adresswechsel verloren).
